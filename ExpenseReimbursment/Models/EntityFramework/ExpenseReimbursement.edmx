@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Emp_Details">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="varchar" MaxLength="10" />
+          <Property Name="EmailID" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="ContactNum" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Emp_Roles">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Exp_Types">
+          <Key>
+            <PropertyRef Name="ExpenseCode" />
+          </Key>
+          <Property Name="ExpenseName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ExpenseCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Approver_Rcode" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Expense_Reports">
+          <Key>
+            <PropertyRef Name="ReportId" />
+          </Key>
+          <Property Name="ReportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpId" Type="varchar" MaxLength="5" />
+          <Property Name="EmpId" Type="int" />
+          <Property Name="ExpenseAmt" Type="int" Nullable="false" />
+          <Property Name="ApproverId" Type="int" />
+          <Property Name="ApprovedAmt" Type="int" Nullable="false" />
+          <Property Name="Comments" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__Emp_Detai__RoleI__1920BF5C">
+          <End Role="Emp_Roles" Type="Self.Emp_Roles" Multiplicity="0..1" />
+          <End Role="Emp_Details" Type="Self.Emp_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Roles">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="Emp_Details">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exp_Types__Appro__164452B1">
+          <End Role="Emp_Roles" Type="Self.Emp_Roles" Multiplicity="0..1" />
+          <End Role="Exp_Types" Type="Self.Exp_Types" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Roles">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="Exp_Types">
+              <PropertyRef Name="Approver_Rcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expense_R__Appro__1DE57479">
+          <End Role="Emp_Details" Type="Self.Emp_Details" Multiplicity="0..1" />
+          <End Role="Expense_Reports" Type="Self.Expense_Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Details">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="Expense_Reports">
+              <PropertyRef Name="ApproverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expense_R__EmpId__1CF15040">
+          <End Role="Emp_Details" Type="Self.Emp_Details" Multiplicity="0..1" />
+          <End Role="Expense_Reports" Type="Self.Expense_Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Details">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="Expense_Reports">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expense_R__ExpId__1BFD2C07">
+          <End Role="Exp_Types" Type="Self.Exp_Types" Multiplicity="0..1" />
+          <End Role="Expense_Reports" Type="Self.Expense_Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exp_Types">
+              <PropertyRef Name="ExpenseCode" />
+            </Principal>
+            <Dependent Role="Expense_Reports">
+              <PropertyRef Name="ExpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Emp_Details" EntityType="Self.Emp_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emp_Roles" EntityType="Self.Emp_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exp_Types" EntityType="Self.Exp_Types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expense_Reports" EntityType="Self.Expense_Reports" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Emp_Detai__RoleI__1920BF5C" Association="Self.FK__Emp_Detai__RoleI__1920BF5C">
+            <End Role="Emp_Roles" EntitySet="Emp_Roles" />
+            <End Role="Emp_Details" EntitySet="Emp_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exp_Types__Appro__164452B1" Association="Self.FK__Exp_Types__Appro__164452B1">
+            <End Role="Emp_Roles" EntitySet="Emp_Roles" />
+            <End Role="Exp_Types" EntitySet="Exp_Types" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expense_R__Appro__1DE57479" Association="Self.FK__Expense_R__Appro__1DE57479">
+            <End Role="Emp_Details" EntitySet="Emp_Details" />
+            <End Role="Expense_Reports" EntitySet="Expense_Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expense_R__EmpId__1CF15040" Association="Self.FK__Expense_R__EmpId__1CF15040">
+            <End Role="Emp_Details" EntitySet="Emp_Details" />
+            <End Role="Expense_Reports" EntitySet="Expense_Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expense_R__ExpId__1BFD2C07" Association="Self.FK__Expense_R__ExpId__1BFD2C07">
+            <End Role="Exp_Types" EntitySet="Exp_Types" />
+            <End Role="Expense_Reports" EntitySet="Expense_Reports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EmailID" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContactNum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Emp_Detai__RoleI__1920BF5C" FromRole="Emp_Details" ToRole="Emp_Roles" />
+          <NavigationProperty Name="ExpenseReportApprover" Relationship="Self.FK__Expense_R__Appro__1DE57479" FromRole="Emp_Details" ToRole="Expense_Reports" />
+          <NavigationProperty Name="ExpenseReport" Relationship="Self.FK__Expense_R__EmpId__1CF15040" FromRole="Emp_Details" ToRole="Expense_Reports" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Emp_Detai__RoleI__1920BF5C" FromRole="Emp_Roles" ToRole="Emp_Details" />
+          <NavigationProperty Name="ExpenseType" Relationship="Self.FK__Exp_Types__Appro__164452B1" FromRole="Emp_Roles" ToRole="Exp_Types" />
+        </EntityType>
+        <EntityType Name="ExpenseType">
+          <Key>
+            <PropertyRef Name="ExpenseCode" />
+          </Key>
+          <Property Name="ExpenseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ExpenseCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Approver_Rcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Exp_Types__Appro__164452B1" FromRole="Exp_Types" ToRole="Emp_Roles" />
+          <NavigationProperty Name="ExpenseReport" Relationship="Self.FK__Expense_R__ExpId__1BFD2C07" FromRole="Exp_Types" ToRole="Expense_Reports" />
+        </EntityType>
+        <EntityType Name="ExpenseReport">
+          <Key>
+            <PropertyRef Name="ReportId" />
+          </Key>
+          <Property Name="ReportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EmpId" Type="Int32" />
+          <Property Name="ExpenseAmt" Type="Int32" Nullable="false" />
+          <Property Name="ApproverId" Type="Int32" />
+          <Property Name="ApprovedAmt" Type="Int32" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmpApprover" Relationship="Self.FK__Expense_R__Appro__1DE57479" FromRole="Expense_Reports" ToRole="Emp_Details" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__Expense_R__EmpId__1CF15040" FromRole="Expense_Reports" ToRole="Emp_Details" />
+          <NavigationProperty Name="ExpenseType" Relationship="Self.FK__Expense_R__ExpId__1BFD2C07" FromRole="Expense_Reports" ToRole="Exp_Types" />
+        </EntityType>
+        <Association Name="FK__Emp_Detai__RoleI__1920BF5C">
+          <End Role="Emp_Roles" Type="Model.Role" Multiplicity="0..1" />
+          <End Role="Emp_Details" Type="Model.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Roles">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="Emp_Details">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expense_R__Appro__1DE57479">
+          <End Role="Emp_Details" Type="Model.Employee" Multiplicity="0..1" />
+          <End Role="Expense_Reports" Type="Model.ExpenseReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Details">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="Expense_Reports">
+              <PropertyRef Name="ApproverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expense_R__EmpId__1CF15040">
+          <End Role="Emp_Details" Type="Model.Employee" Multiplicity="0..1" />
+          <End Role="Expense_Reports" Type="Model.ExpenseReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Details">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="Expense_Reports">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exp_Types__Appro__164452B1">
+          <End Role="Emp_Roles" Type="Model.Role" Multiplicity="0..1" />
+          <End Role="Exp_Types" Type="Model.ExpenseType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Emp_Roles">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="Exp_Types">
+              <PropertyRef Name="Approver_Rcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expense_R__ExpId__1BFD2C07">
+          <End Role="Exp_Types" Type="Model.ExpenseType" Multiplicity="0..1" />
+          <End Role="Expense_Reports" Type="Model.ExpenseReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exp_Types">
+              <PropertyRef Name="ExpenseCode" />
+            </Principal>
+            <Dependent Role="Expense_Reports">
+              <PropertyRef Name="ExpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExpenseReimbursementContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Model.Employee" />
+          <EntitySet Name="Roles" EntityType="Model.Role" />
+          <EntitySet Name="ExpenseTypes" EntityType="Model.ExpenseType" />
+          <EntitySet Name="ExpenseReports1" EntityType="Model.ExpenseReport" />
+          <AssociationSet Name="FK__Emp_Detai__RoleI__1920BF5C" Association="Self.FK__Emp_Detai__RoleI__1920BF5C">
+            <End Role="Emp_Roles" EntitySet="Roles" />
+            <End Role="Emp_Details" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expense_R__Appro__1DE57479" Association="Self.FK__Expense_R__Appro__1DE57479">
+            <End Role="Emp_Details" EntitySet="Employees" />
+            <End Role="Expense_Reports" EntitySet="ExpenseReports1" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expense_R__EmpId__1CF15040" Association="Self.FK__Expense_R__EmpId__1CF15040">
+            <End Role="Emp_Details" EntitySet="Employees" />
+            <End Role="Expense_Reports" EntitySet="ExpenseReports1" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exp_Types__Appro__164452B1" Association="Self.FK__Exp_Types__Appro__164452B1">
+            <End Role="Emp_Roles" EntitySet="Roles" />
+            <End Role="Exp_Types" EntitySet="ExpenseTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expense_R__ExpId__1BFD2C07" Association="Self.FK__Expense_R__ExpId__1BFD2C07">
+            <End Role="Exp_Types" EntitySet="ExpenseTypes" />
+            <End Role="Expense_Reports" EntitySet="ExpenseReports1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ExpenseReimbursementContext">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="Model.Employee">
+              <MappingFragment StoreEntitySet="Emp_Details">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="ContactNum" ColumnName="ContactNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="Model.Role">
+              <MappingFragment StoreEntitySet="Emp_Roles">
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpenseTypes">
+            <EntityTypeMapping TypeName="Model.ExpenseType">
+              <MappingFragment StoreEntitySet="Exp_Types">
+                <ScalarProperty Name="ExpenseName" ColumnName="ExpenseName" />
+                <ScalarProperty Name="ExpenseCode" ColumnName="ExpenseCode" />
+                <ScalarProperty Name="Approver_Rcode" ColumnName="Approver_Rcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpenseReports1">
+            <EntityTypeMapping TypeName="Model.ExpenseReport">
+              <MappingFragment StoreEntitySet="Expense_Reports">
+                <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+                <ScalarProperty Name="ExpId" ColumnName="ExpId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="ExpenseAmt" ColumnName="ExpenseAmt" />
+                <ScalarProperty Name="ApproverId" ColumnName="ApproverId" />
+                <ScalarProperty Name="ApprovedAmt" ColumnName="ApprovedAmt" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
