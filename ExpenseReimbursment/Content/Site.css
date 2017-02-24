@@ -22,7 +22,27 @@ select,
 textarea {
     max-width: 280px;
 }
-
-.content-centre {
+.lead {
+    text-align:right;
+    font-style:italic;
+}
+.footer{
     text-align:center;
+    margin-top:auto;
+    font-size:medium;
+}
+
+.content-centre1 {
+     margin-left:400px;
+     font-size:x-large;
+     
+}
+
+.content-centre2 {
+     margin-left:inherit;
+     font-size:x-large;
+}
+
+.navbar {
+    background-color:black;
 }

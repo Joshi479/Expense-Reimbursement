@@ -32,11 +32,13 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year</p>
+       
+    </div>
+    <div>
+        <footer class="footer">
+            <p:>gvbert &copy; @DateTime.Now.Year</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
