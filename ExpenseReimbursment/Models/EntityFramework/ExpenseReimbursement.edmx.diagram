@@ -14,6 +14,7 @@
         <AssociationConnector Association="Model.FK__Expense_R__EmpId__1CF15040" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK__Exp_Types__Appro__164452B1" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK__Expense_R__ExpId__1BFD2C07" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="5.25" PointY="6.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

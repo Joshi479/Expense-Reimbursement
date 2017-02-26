@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Emp_Details">
           <Key>
             <PropertyRef Name="EmpID" />
@@ -43,6 +43,13 @@
           <Property Name="ApproverId" Type="int" />
           <Property Name="ApprovedAmt" Type="int" Nullable="false" />
           <Property Name="Comments" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserPassword" Type="varbinary" MaxLength="255" />
         </EntityType>
         <Association Name="FK__Emp_Detai__RoleI__1920BF5C">
           <End Role="Emp_Roles" Type="Self.Emp_Roles" Multiplicity="0..1" />
@@ -109,6 +116,7 @@
           <EntitySet Name="Emp_Roles" EntityType="Self.Emp_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Exp_Types" EntityType="Self.Exp_Types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expense_Reports" EntityType="Self.Expense_Reports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Emp_Detai__RoleI__1920BF5C" Association="Self.FK__Emp_Detai__RoleI__1920BF5C">
             <End Role="Emp_Roles" EntitySet="Emp_Roles" />
             <End Role="Emp_Details" EntitySet="Emp_Details" />
@@ -130,8 +138,7 @@
             <End Role="Expense_Reports" EntitySet="Expense_Reports" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -269,7 +276,15 @@
             <End Role="Exp_Types" EntitySet="ExpenseTypes" />
             <End Role="Expense_Reports" EntitySet="ExpenseReports1" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="Model.User" />
         </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserPassword" Type="Binary" MaxLength="255" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -316,6 +331,14 @@
                 <ScalarProperty Name="ApproverId" ColumnName="ApproverId" />
                 <ScalarProperty Name="ApprovedAmt" ColumnName="ApprovedAmt" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
