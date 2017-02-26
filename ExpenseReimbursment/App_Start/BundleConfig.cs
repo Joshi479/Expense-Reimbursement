@@ -26,6 +26,9 @@ namespace ExpenseReimbursment
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/mainJS").Include(
+                      "~/Scripts/ApplicationJS/gvbexpense.js"));
         }
     }
 }

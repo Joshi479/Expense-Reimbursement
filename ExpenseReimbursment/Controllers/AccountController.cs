@@ -55,10 +55,11 @@ namespace ExpenseReimbursment.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        [HttpGet]
+        public PartialViewResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            LoginViewModel loginModel = new LoginViewModel();
+            return PartialView("_Login", loginModel);
         }
 
         //
@@ -75,7 +76,7 @@ namespace ExpenseReimbursment.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.EmpId.ToString(), model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
