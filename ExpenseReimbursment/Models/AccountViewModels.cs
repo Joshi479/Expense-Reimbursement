@@ -49,9 +49,9 @@ namespace ExpenseReimbursment.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Employee Id")]
         [EmailAddress]
-        public string Email { get; set; }
+        public string EmpId { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
