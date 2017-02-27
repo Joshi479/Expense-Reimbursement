@@ -6,17 +6,12 @@ using System.Web.Mvc;
 
 namespace ExpenseReimbursment.Controllers
 {
-    public class AdminController : Controller
+    public class EmployeeController : Controller
     {
-        // GET: Admin
+        // GET: Employee
         public ActionResult Index()
         {
             return View();
-        }
-
-        public PartialViewResult RegisterEmployee()
-        {
-            return PartialView("_Register");
         }
     }
 }
