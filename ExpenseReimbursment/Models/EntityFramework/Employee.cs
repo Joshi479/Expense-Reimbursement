@@ -12,21 +12,28 @@ namespace ExpenseReimbursment.Models.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class Emp_Roles
+    public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Emp_Roles()
+        public Employee()
         {
-            this.Emp_Details = new HashSet<Emp_Details>();
-            this.Exp_Types = new HashSet<Exp_Types>();
+            this.ExpenseReportApprover = new HashSet<ExpenseReport>();
+            this.ExpenseReport = new HashSet<ExpenseReport>();
         }
     
-        public string RoleCode { get; set; }
-        public string RoleName { get; set; }
+        public int EmpID { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string RoleID { get; set; }
+        public string EmailID { get; set; }
+        public string ContactNum { get; set; }
+        public string Gender { get; set; }
     
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Emp_Details> Emp_Details { get; set; }
+        public virtual ICollection<ExpenseReport> ExpenseReportApprover { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Exp_Types> Exp_Types { get; set; }
+        public virtual ICollection<ExpenseReport> ExpenseReport { get; set; }
     }
 }

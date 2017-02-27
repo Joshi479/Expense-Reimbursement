@@ -12,18 +12,9 @@ namespace ExpenseReimbursment.Models.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class Expense_Reports
+    public partial class User
     {
-        public int ReportId { get; set; }
-        public string ExpId { get; set; }
-        public Nullable<int> EmpId { get; set; }
-        public int ExpenseAmt { get; set; }
-        public Nullable<int> ApproverId { get; set; }
-        public int ApprovedAmt { get; set; }
-        public string Comments { get; set; }
-    
-        public virtual Emp_Details Emp_Details { get; set; }
-        public virtual Emp_Details Emp_Details1 { get; set; }
-        public virtual Exp_Types Exp_Types { get; set; }
+        public int UserId { get; set; }
+        public byte[] UserPassword { get; set; }
     }
 }
