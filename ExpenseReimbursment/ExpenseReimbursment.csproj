@@ -215,10 +215,7 @@
     <Compile Include="Models\Entities\ExpenseReport.cs" />
     <Compile Include="Models\Entities\ExpenseType.cs" />
     <Compile Include="Models\Entities\Role.cs" />
-    <Compile Include="Models\EntityFramework\Emp_Details.cs">
-      <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EntityFramework\Emp_Roles.cs">
+    <Compile Include="Models\EntityFramework\Employee.cs">
       <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityFramework\ExpenseReimbursement.Context.cs">
@@ -237,10 +234,16 @@
       <DependentUpon>ExpenseReimbursement.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityFramework\ExpenseReimbusementContext.cs" />
-    <Compile Include="Models\EntityFramework\Expense_Reports.cs">
+    <Compile Include="Models\EntityFramework\ExpenseReport.cs">
       <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EntityFramework\Exp_Types.cs">
+    <Compile Include="Models\EntityFramework\ExpenseType.cs">
+      <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\Role.cs">
+      <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityFramework\User.cs">
       <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />

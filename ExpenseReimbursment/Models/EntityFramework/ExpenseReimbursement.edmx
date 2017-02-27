@@ -16,6 +16,7 @@
           <Property Name="RoleID" Type="varchar" MaxLength="10" />
           <Property Name="EmailID" Type="varchar" MaxLength="70" Nullable="false" />
           <Property Name="ContactNum" Type="varchar" MaxLength="20" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Emp_Roles">
           <Key>
@@ -156,6 +157,7 @@
           <NavigationProperty Name="Role" Relationship="Self.FK__Emp_Detai__RoleI__1920BF5C" FromRole="Emp_Details" ToRole="Emp_Roles" />
           <NavigationProperty Name="ExpenseReportApprover" Relationship="Self.FK__Expense_R__Appro__1DE57479" FromRole="Emp_Details" ToRole="Expense_Reports" />
           <NavigationProperty Name="ExpenseReport" Relationship="Self.FK__Expense_R__EmpId__1CF15040" FromRole="Emp_Details" ToRole="Expense_Reports" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -294,6 +296,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="Model.Employee">
               <MappingFragment StoreEntitySet="Emp_Details">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />

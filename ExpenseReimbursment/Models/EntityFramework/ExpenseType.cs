@@ -12,20 +12,20 @@ namespace ExpenseReimbursment.Models.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class Exp_Types
+    public partial class ExpenseType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Exp_Types()
+        public ExpenseType()
         {
-            this.Expense_Reports = new HashSet<Expense_Reports>();
+            this.ExpenseReport = new HashSet<ExpenseReport>();
         }
     
         public string ExpenseName { get; set; }
         public string ExpenseCode { get; set; }
         public string Approver_Rcode { get; set; }
     
-        public virtual Emp_Roles Emp_Roles { get; set; }
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Expense_Reports> Expense_Reports { get; set; }
+        public virtual ICollection<ExpenseReport> ExpenseReport { get; set; }
     }
 }
