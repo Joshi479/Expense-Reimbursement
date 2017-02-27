@@ -50,8 +50,7 @@ namespace ExpenseReimbursment.Models
     {
         [Required]
         [Display(Name = "Employee Id")]
-        [EmailAddress]
-        public string EmpId { get; set; }
+        public string UserId { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

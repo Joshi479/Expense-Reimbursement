@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ExpenseReimbursment.Models;
+using ExpenseReimbursment.Models.Entities;
+using ExpenseReimbursment.Models.Authorization;
 
 namespace ExpenseReimbursment.Controllers
 {
@@ -17,15 +19,21 @@ namespace ExpenseReimbursment.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private UserEntity _user;
+        private UserAuthentication _authUser;
 
         public AccountController()
         {
+            _user = new UserEntity();
+            _authUser = new UserAuthentication();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _user = new UserEntity();
+            _authUser = new UserAuthentication();
         }
 
         public ApplicationSignInManager SignInManager
@@ -58,8 +66,7 @@ namespace ExpenseReimbursment.Controllers
         [HttpGet]
         public PartialViewResult Login()
         {
-            LoginViewModel loginModel = new LoginViewModel();
-            return PartialView("_Login", loginModel);
+            return PartialView("_Login");
         }
 
         //
@@ -67,29 +74,42 @@ namespace ExpenseReimbursment.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Message = "Invalid User details.";
                 return View(model);
             }
+            _user.UserId = Convert.ToInt32(model.UserId);
+            _user.Password = model.Password;
+            if (_authUser.AuthenticateUser(_user))
+            {
+                var role = _authUser.GetUserRole(_user.UserId);
+                if (role.RoleCode == "ADM")
+                {
+                    return View("Admin/Index.cshtml");
+                }
+            }
+            ViewBag.Message = "User Name and Password does not match. Please try Again.";
+            return PartialView("_Login");
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.EmpId.ToString(), model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
-            }
+            //var result = await SignInManager.PasswordSignInAsync(model.UserId.ToString(), model.Password, model.RememberMe, shouldLockout: false);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("", "Invalid login attempt.");
+            //        return View(model);
+            //}
         }
 
         //

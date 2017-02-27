@@ -14,6 +14,6 @@ namespace ExpenseReimbursment.Models.EntityFramework
         public DbSet<Role> EmpRoles { get; set; }
         public DbSet<ExpenseReport> ExpReports {get; set;}
         public DbSet<ExpenseType> ExpTypes { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
     }
 }
