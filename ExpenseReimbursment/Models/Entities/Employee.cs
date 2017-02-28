@@ -11,10 +11,11 @@ namespace ExpenseReimbursment.Models.Entities
         private string _firstName;
         private string _middleName;
         private string _lastname;
+        private string _gender;
         private string _roleId;
         private string _emailId;
         private string _contactNumber;
-        private Role _empRole;
+        private EmpRole _empRole;
 
         public int EmpId
         {
@@ -64,6 +65,18 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
+        public string Gender
+        {
+            get
+            {
+                return _gender;
+            }
+            set
+            {
+                _gender = value;
+            }
+        }
+
         public string RoleId
         {
             get
@@ -100,7 +113,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
-        public Role EmpRole
+        public EmpRole EmpRole
         {
             get
             {

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ExpenseReimbursment.Models.Entities
 {
-    public class Role
+    public class EmpRole
     {
         private string _roleName;
         private string _roleCode;

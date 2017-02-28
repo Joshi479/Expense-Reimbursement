@@ -10,7 +10,7 @@ namespace ExpenseReimbursment.Models.Entities
         private string _expCode;
         private string _expName;
         private string _apprCode;
-        private Role _empRole;
+        private EmpRole _empRole;
 
         public string ExpCode
         {
@@ -48,7 +48,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
-        public Role EmpRole
+        public EmpRole EmpRole
         {
             get
             {
