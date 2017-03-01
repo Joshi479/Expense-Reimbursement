@@ -1,0 +1,37 @@
+﻿@using ExpenseReimbursment.Models.Entities
+@model Employee
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2">
+            Employee Name
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.FirstName + " " + Model.MiddleName + " " + Model.Lastname)
+        </div>
+        <div class="col-lg-2">
+            Grnder
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.Gender)
+        </div>
+        <div class="col-lg-2">
+            E-mail
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.EmailId)
+        </div>
+        <div class="col-lg-2">
+            Phone Number
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.ContactNumber)
+        </div>
+        <div class="col-lg-2">
+            Role
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.EmpRole.RoleName)
+        </div>
+    </div>
+</div>
