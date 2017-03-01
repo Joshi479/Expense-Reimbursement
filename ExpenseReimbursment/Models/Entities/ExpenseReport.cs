@@ -14,6 +14,9 @@ namespace ExpenseReimbursment.Models.Entities
         private int _approverId;
         private int _approvedAmt;
         private string _comments;
+        private string _appliedDate;
+        private string _approvedDate;
+        private string _status;
         private Employee _employee;
         private Employee _approver;
         private ExpenseType _expType;
@@ -99,6 +102,42 @@ namespace ExpenseReimbursment.Models.Entities
             set
             {
                 _comments = value;
+            }
+        }
+
+        public string AppliedDate
+        {
+            get
+            {
+                return _appliedDate;
+            }
+            set
+            {
+                _appliedDate = value;
+            }
+        }
+
+        public string ApprovedDate
+        {
+            get
+            {
+                return _approvedDate;
+            }
+            set
+            {
+                _approvedDate = value;
+            }
+        }
+
+        public string Status
+        {
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
             }
         }
 

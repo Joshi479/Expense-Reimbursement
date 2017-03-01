@@ -44,6 +44,9 @@
           <Property Name="ApproverId" Type="int" />
           <Property Name="ApprovedAmt" Type="int" Nullable="false" />
           <Property Name="Comments" Type="varchar" MaxLength="255" />
+          <Property Name="AppliedDate" Type="datetime" Nullable="false" />
+          <Property Name="ApprovalDate" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -192,6 +195,9 @@
           <NavigationProperty Name="EmpApprover" Relationship="Self.FK__Expense_R__Appro__1DE57479" FromRole="Expense_Reports" ToRole="Emp_Details" />
           <NavigationProperty Name="Employee" Relationship="Self.FK__Expense_R__EmpId__1CF15040" FromRole="Expense_Reports" ToRole="Emp_Details" />
           <NavigationProperty Name="ExpenseType" Relationship="Self.FK__Expense_R__ExpId__1BFD2C07" FromRole="Expense_Reports" ToRole="Exp_Types" />
+          <Property Name="AppliedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ApprovalDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__Emp_Detai__RoleI__1920BF5C">
           <End Role="Emp_Roles" Type="Model.Role" Multiplicity="0..1" />
@@ -327,6 +333,9 @@
           <EntitySetMapping Name="ExpenseReports1">
             <EntityTypeMapping TypeName="Model.ExpenseReport">
               <MappingFragment StoreEntitySet="Expense_Reports">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
                 <ScalarProperty Name="ReportId" ColumnName="ReportId" />
                 <ScalarProperty Name="ExpId" ColumnName="ExpId" />
                 <ScalarProperty Name="EmpId" ColumnName="EmpId" />

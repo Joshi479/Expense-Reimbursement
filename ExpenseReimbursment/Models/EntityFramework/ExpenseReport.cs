@@ -21,6 +21,9 @@ namespace ExpenseReimbursment.Models.EntityFramework
         public Nullable<int> ApproverId { get; set; }
         public int ApprovedAmt { get; set; }
         public string Comments { get; set; }
+        public System.DateTime AppliedDate { get; set; }
+        public Nullable<System.DateTime> ApprovalDate { get; set; }
+        public string Status { get; set; }
     
         public virtual Employee EmpApprover { get; set; }
         public virtual Employee Employee { get; set; }
