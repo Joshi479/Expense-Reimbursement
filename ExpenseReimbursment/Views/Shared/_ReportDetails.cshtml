@@ -1,0 +1,49 @@
+﻿@using ExpenseReimbursment.Models.Entities
+@model ExpenseReport
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2">
+            Report Id
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.ReportId)
+        </div>
+        <div class="col-lg-2">
+            Report Type
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.ExpType.ExpName)
+        </div>
+        <div class="col-lg-2">
+            Expense Amount
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.ExpenseAmt)
+        </div>
+        <div class="col-lg-2">
+            Applied by
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.EmpId)
+        </div>
+        <div class="col-lg-2">
+            Approved Amount
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.ApprovedAmt)
+        </div>
+        <div class="col-lg-2">
+            Approved By
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.ApproverId)
+        </div>
+        <div class="col-lg-2">
+            Approved By
+        </div>
+        <div class="col-lg-2">
+            @Html.LabelFor(m => Model.ApproverId)
+        </div>
+    </div>
+</div>

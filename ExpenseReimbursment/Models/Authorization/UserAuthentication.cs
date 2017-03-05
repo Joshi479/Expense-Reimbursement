@@ -20,7 +20,7 @@ namespace ExpenseReimbursment.Models.Authorization
         }
         public Role GetUserRole(int empId)
         {
-            string roleId = expContext.EmployeeDetails.Where(e => e.EmpId == empId).FirstOrDefault().RoleId;
+            string roleId = expContext.EmployeeDetails.Where(e => e.EmpID == empId).FirstOrDefault().RoleID;
             return expContext.EmpRoles.Where(r => r.RoleCode == roleId).FirstOrDefault();
         }
     }

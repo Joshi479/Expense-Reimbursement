@@ -1,0 +1,62 @@
+﻿@using ExpenseReimbursment.Models.Entities
+@model List<Employee>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            Employee Id
+        </div>
+        <div class="col-md-8">
+            First Name
+        </div>
+        <div class="col-md-8">
+            Middle Name
+        </div>
+        <div class="col-md-8">
+            Last Name
+        </div>
+        <div class="col-md-8">
+            Gender
+        </div>
+        <div class="col-md-8">
+            E-mail
+        </div>
+        <div class="col-md-8">
+            Phone
+        </div>
+        <div class="col-md-8">
+            Role
+        </div>
+    </div>
+
+    @foreach (Employee emp in Model)
+    {
+        <div class="row">
+            <div class="col-md-8">
+                @Html.LabelFor(m => emp.EmpId)
+            </div>
+            <div class="col-md-8">
+                @Html.LabelFor(m => emp.FirstName)
+            </div>
+            <div class="col-md-8">
+                @Html.LabelFor(m => emp.MiddleName)
+            </div>
+            <div class="col-md-8">
+                @Html.LabelFor(m => emp.Lastname)
+            </div>
+            <div class="col-md-8">
+                @Html.LabelFor(m => emp.Gender)
+            </div>
+            <div class="col-md-8">
+                @Html.LabelFor(m => emp.EmailId)
+            </div>
+            <div class="col-md-8">
+                @Html.LabelFor(m => emp.ContactNumber)
+            </div>
+            <div class="col-md-8">
+                @Html.LabelFor(m => emp.EmpRole.RoleName)
+            </div>
+        </div>
+    }
+</div>

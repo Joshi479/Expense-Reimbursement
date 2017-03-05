@@ -52,7 +52,7 @@ namespace ExpenseReimbursment.Models.Authorization
 
         public override string[] GetRolesForUser(string username)
         {
-            return new string[] { expContext.EmployeeDetails.Where(u => u.EmpId == Convert.ToInt32(username)).FirstOrDefault().RoleId };
+            return new string[] { expContext.EmployeeDetails.Where(u => u.EmpID == Convert.ToInt32(username)).FirstOrDefault().RoleID };
         }
 
         public override string[] GetUsersInRole(string roleName)

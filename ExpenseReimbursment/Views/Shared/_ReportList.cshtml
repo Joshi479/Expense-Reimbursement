@@ -1,0 +1,56 @@
+﻿@using ExpenseReimbursment.Models.Entities
+@model List<ExpenseReport>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            Report Id
+        </div>
+        <div class="col-md-7">
+            Report Type
+        </div>
+        <div class="col-md-7">
+            Applied Employee
+        </div>
+        <div class="col-md-7">
+            Expense Amount
+        </div>
+        <div class="col-md-7">
+            Approved Amount
+        </div>
+        <div class="col-md-7">
+            Approver Id
+        </div>
+        <div class="col-md-7">
+            Comments
+        </div>
+ 
+    </div>
+
+    @foreach (ExpenseReport expReport in Model)
+    {
+        <div class="row">
+            <div class="col-md-7">
+                @Html.LabelFor(m => expReport.ReportId)
+            </div>
+            <div class="col-md-7">
+                @Html.LabelFor(m => expReport.ExpType.ExpName)
+            </div>
+            <div class="col-md-7">
+                @Html.LabelFor(m => expReport.EmpId)
+            </div>
+            <div class="col-md-7">
+                @Html.LabelFor(m => expReport.ExpenseAmt)
+            </div>
+            <div class="col-md-7">
+                @Html.LabelFor(m => expReport.ApprovedAmt)
+            </div>
+            <div class="col-md-7">
+                @Html.LabelFor(m => expReport.ApproverId)
+            </div>
+            <div class="col-md-7">
+                @Html.LabelFor(m => expReport.Comments)
+            </div>
+        </div>
+    }
+</div>

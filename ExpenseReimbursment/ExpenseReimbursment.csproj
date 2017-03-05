@@ -45,11 +45,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -200,6 +200,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Models\Authorization\RoleAuthorize.cs" />
     <Compile Include="Models\Authorization\UserAuthentication.cs" />
     <Compile Include="Models\Entities\UserEntity.cs" />
@@ -213,7 +214,7 @@
     <Compile Include="Models\Entities\Employee.cs" />
     <Compile Include="Models\Entities\ExpenseReport.cs" />
     <Compile Include="Models\Entities\ExpenseType.cs" />
-    <Compile Include="Models\Entities\Role.cs" />
+    <Compile Include="Models\Entities\EmpRole.cs" />
     <Compile Include="Models\EntityFramework\Employee.cs">
       <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
     </Compile>
@@ -326,6 +327,15 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\_Login.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\_Register.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Employee\_GenerateReport.cshtml" />
+    <Content Include="Views\Employee\_ViewReports.cshtml" />
+    <Content Include="Views\Employee\_ReportDetails.cshtml" />
+    <Content Include="Views\Admin\_EmpList.cshtml" />
+    <Content Include="Views\Shared\_ReportList.cshtml" />
+    <Content Include="Views\Shared\_EmployeeDetails.cshtml" />
+    <Content Include="Views\Shared\_ReportDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
