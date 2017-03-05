@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="DAL\DataAccess.cs" />
     <Compile Include="Models\Authorization\RoleAuthorize.cs" />
     <Compile Include="Models\Authorization\UserAuthentication.cs" />
     <Compile Include="Models\Entities\UserEntity.cs" />
@@ -211,9 +212,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Entities\Employee.cs" />
-    <Compile Include="Models\Entities\ExpenseReport.cs" />
-    <Compile Include="Models\Entities\ExpenseType.cs" />
+    <Compile Include="Models\Entities\EmployeeEntity.cs" />
+    <Compile Include="Models\Entities\ExpenseReportEntity.cs" />
+    <Compile Include="Models\Entities\ExpenseTypeEntity.cs" />
     <Compile Include="Models\Entities\EmpRole.cs" />
     <Compile Include="Models\EntityFramework\Employee.cs">
       <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
@@ -331,11 +332,13 @@
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\_GenerateReport.cshtml" />
     <Content Include="Views\Employee\_ViewReports.cshtml" />
-    <Content Include="Views\Employee\_ReportDetails.cshtml" />
+    <Content Include="Views\Shared\_ReportDetails.cshtml" />
     <Content Include="Views\Admin\_EmpList.cshtml" />
     <Content Include="Views\Shared\_ReportList.cshtml" />
     <Content Include="Views\Shared\_EmployeeDetails.cshtml" />
-    <Content Include="Views\Shared\_ReportDetails.cshtml" />
+    <Content Include="Views\Admin\_EditEmployeeDetails.cshtml" />
+    <Content Include="Views\Employee\_UpdateReport.cshtml" />
+    <Content Include="Views\Shared\_ApproveReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

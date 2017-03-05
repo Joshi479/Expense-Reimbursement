@@ -3,25 +3,34 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-11">
             Report Id
         </div>
-        <div class="col-md-7">
+        <div class="col-md-11">
             Report Type
         </div>
-        <div class="col-md-7">
+        <div class="col-md-11">
             Applied Employee
         </div>
-        <div class="col-md-7">
+        <div class="col-md-11">
             Expense Amount
         </div>
-        <div class="col-md-7">
+        <div class="col-md-11">
+            Applied Date
+        </div>
+        <div class="col-md-11">
+            Status
+        </div>
+        <div class="col-md-11">
             Approved Amount
         </div>
-        <div class="col-md-7">
+        <div class="col-md-11">
             Approver Id
         </div>
-        <div class="col-md-7">
+        <div class="col-md-11">
+            Approved Date
+        </div>
+        <div class="col-md-11">
             Comments
         </div>
  
@@ -30,27 +39,48 @@
     @foreach (ExpenseReport expReport in Model)
     {
         <div class="row">
-            <div class="col-md-7">
-                @Html.LabelFor(m => expReport.ReportId)
+            <div class="col-md-11">
+                <input type="button" class="btn-link" value="@expReport.ReportId" />
             </div>
-            <div class="col-md-7">
+            <div class="col-md-11">
                 @Html.LabelFor(m => expReport.ExpType.ExpName)
             </div>
-            <div class="col-md-7">
-                @Html.LabelFor(m => expReport.EmpId)
+            <div class="col-md-11">
+                <input type="button" class="btn-link" value="@expReport.EmpId" />
             </div>
-            <div class="col-md-7">
+            <div class="col-md-11">
                 @Html.LabelFor(m => expReport.ExpenseAmt)
             </div>
-            <div class="col-md-7">
-                @Html.LabelFor(m => expReport.ApprovedAmt)
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.AppliedDate)
             </div>
-            <div class="col-md-7">
-                @Html.LabelFor(m => expReport.ApproverId)
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.Status.ToLower().Equals("approved") ? expReport.ApprovedAmt.ToString() : "TBD")
             </div>
-            <div class="col-md-7">
-                @Html.LabelFor(m => expReport.Comments)
+            <div class="col-md-11">
+                <input type="button" class="btn-link" value="@expReport.ApproverId" />
             </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.Status.ToLower().Equals("approved") ? expReport.ApprovedDate : "TBD")
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.Status.ToLower().Equals("approved")? expReport.Comments : "TBD")
+            </div>
+            @if (expReport.Status.ToLower().Equals("pending"))
+            {
+                <div class="col-md-11">
+                    <input type="button" class="btn-link" value="Approve" />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-11">
+                    <label>
+                        Approved
+                    </label>
+                </div>
+            }
+
         </div>
     }
 </div>

@@ -2,7 +2,7 @@
 @model ExpenseReimbursment.Models.RegisterViewModel
 
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("RegisterEmployee", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>Register a new Employee.</h4>
@@ -33,7 +33,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.Gender, new SelectList(new List<SelectListItem> { new SelectListItem { Text="Male", Value="Male" }, new SelectListItem { Text="Female", Value="Female" } } ), "Select Gender")
+            @Html.DropDownListFor(m => m.Gender, new SelectList(new List<SelectListItem> { new SelectListItem { Text="Male", Value="Male" }, new SelectListItem { Text="Female", Value="Female" } } ), "Select Gender", new { @class = "form-control" })
         </div>
     </div>
 

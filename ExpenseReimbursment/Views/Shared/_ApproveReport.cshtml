@@ -1,0 +1,30 @@
+﻿@using ExpenseReimbursment.Models.Entities
+@model ExpenseReport
+
+<div class="col-md-11">
+    @Html.LabelFor(m => Model.ReportId)
+</div>
+<div class="col-md-11">
+    @Html.LabelFor(m => Model.ExpType.ExpName)
+</div>
+<div class="col-md-11">
+    @Html.LabelFor(m => Model.EmpId)
+</div>
+<div class="col-md-11">
+    @Html.LabelFor(m => Model.ExpenseAmt)
+</div>
+<div class="col-md-11">
+    @Html.LabelFor(m => Model.AppliedDate)
+</div>
+<div class="col-md-11">
+    @Html.TextBoxFor(m => Model.ApprovedAmt)
+</div>
+<div class="col-md-11">
+    @Html.LabelFor(m => Model.ApproverId)
+</div>
+<div class="col-md-11">
+    @Html.TextBoxFor(m => Model.ApprovedDate)
+</div>
+<div class="col-md-11">
+    @Html.TextAreaFor(m => Model.Comments)
+</div>

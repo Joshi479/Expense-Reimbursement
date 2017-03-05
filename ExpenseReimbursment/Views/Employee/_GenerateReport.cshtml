@@ -1,1 +1,36 @@
 ﻿
+@model ExpenseReimbursment.Models.ReportViewModel
+
+
+@using (Html.BeginForm("GenerateExpenseReport", "Employee", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <h4>Expense Report.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ReportType, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.ReportType,new SelectList(new List<SelectListItem> { new SelectListItem { Text = "", Value = "" }, new SelectListItem { Text = "", Value = "" }, new SelectListItem { Text = "", Value= "" }, new SelectListItem { Text= "", Value="" } }), "Select Expense Type", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ExpenseAmt, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ExpenseAmt, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Generate" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

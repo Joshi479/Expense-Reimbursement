@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ExpenseReimbursment.Models.Entities
 {
-    public class ExpenseReport
+    public class ExpenseReportEntity
     {
         private int _reportId;
         private string _expTyCode;
@@ -17,9 +17,9 @@ namespace ExpenseReimbursment.Models.Entities
         private string _appliedDate;
         private string _approvedDate;
         private string _status;
-        private Employee _employee;
-        private Employee _approver;
-        private ExpenseType _expType;
+        private EmployeeEntity _employee;
+        private EmployeeEntity _approver;
+        private ExpenseTypeEntity _expType;
 
         public int ReportId
         {
@@ -141,7 +141,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
-        public Employee Employee
+        public EmployeeEntity Employee
         {
             get
             {
@@ -153,7 +153,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
-        public Employee Approver
+        public EmployeeEntity Approver
         {
             get
             {
@@ -166,7 +166,7 @@ namespace ExpenseReimbursment.Models.Entities
         }
 
         
-        public ExpenseType ExpType
+        public ExpenseTypeEntity ExpType
         {
             get
             {

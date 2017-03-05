@@ -4,28 +4,28 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             Employee Id
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             First Name
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             Middle Name
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             Last Name
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             Gender
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             E-mail
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             Phone
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             Role
         </div>
     </div>
@@ -33,29 +33,32 @@
     @foreach (Employee emp in Model)
     {
         <div class="row">
-            <div class="col-md-8">
-                @Html.LabelFor(m => emp.EmpId)
+            <div class="col-md-9">
+                <input type="button" class="btn-link" value="@emp.EmpId">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 @Html.LabelFor(m => emp.FirstName)
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 @Html.LabelFor(m => emp.MiddleName)
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 @Html.LabelFor(m => emp.Lastname)
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 @Html.LabelFor(m => emp.Gender)
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 @Html.LabelFor(m => emp.EmailId)
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 @Html.LabelFor(m => emp.ContactNumber)
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 @Html.LabelFor(m => emp.EmpRole.RoleName)
+            </div>
+            <div class="col-md-9">
+                <input type="button" class="btn-link" value="Edit" />
             </div>
         </div>
     }
