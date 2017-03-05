@@ -66,7 +66,7 @@ namespace ExpenseReimbursment.Models
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-        
+
         [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
         [Required]
@@ -118,5 +118,16 @@ namespace ExpenseReimbursment.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class ReportViewModel
+    {
+        [Required]
+        [Display(Name = "Report Type")]
+        public string ReportType { get; set; }
+
+        [Required]
+        [Display(Name = "Expense Amount")]
+        public string ExpenseAmt { get; set; }
     }
 }

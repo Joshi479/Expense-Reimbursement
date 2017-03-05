@@ -1,8 +1,45 @@
-﻿
+﻿@model ExpenseReimbursment.Models.Entities.EmployeeEntity
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "GVB Expense Reimbursement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("View Profile", "EmployeeDetails", "Employee")</li>
+                <li>@Html.ActionLink("Generate Report", "GenerateExpenseReport", "Employee")</li>
+                <li>
+                    @if (Model.RoleId.Equals("EMP"))
+                    {
+                        @Html.ActionLink("View My Reports", "GetReportList", "Employee", new { Model.EmpId })
+                    }
+                    else
+                    {
+                        <label>Reports</label>
+                            <ul>
+                                <li>@Html.ActionLink("View My Reports", "GetReportList", "Employee", new { Model.EmpId })</li>
+                                <li>@Html.ActionLink("View Employees Reports", "GetReportListApproval", "Employee", new { Model.EmpId })</li>
+                            </ul>
+                    }                    
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div id="employeeBody" class="container">
+
+</div>
 

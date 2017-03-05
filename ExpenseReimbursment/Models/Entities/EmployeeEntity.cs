@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ExpenseReimbursment.Models.Entities
 {
-    public class Employee
+    public class EmployeeEntity
     {
         private int _empId;
         private string _firstName;

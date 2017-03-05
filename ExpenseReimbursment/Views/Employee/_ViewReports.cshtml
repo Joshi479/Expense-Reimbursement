@@ -1,1 +1,87 @@
 ﻿
+@using ExpenseReimbursment.Models.Entities
+@model List<ExpenseReport>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            Report Id
+        </div>
+        <div class="col-md-10">
+            Report Type
+        </div>
+        <div class="col-md-10">
+            Applied Employee
+        </div>
+        <div class="col-md-10">
+            Expense Amount
+        </div>
+        <div class="col-md-10">
+            Applied Date
+        </div>
+        <div class="col-md-10">
+            Status
+        </div>
+        <div class="col-md-10">
+            Approved Amount
+        </div>
+        <div class="col-md-10">
+            Approver Id
+        </div>
+        <div class="col-md-10">
+            Approved Date
+        </div>
+        <div class="col-md-10">
+            Comments
+        </div>
+
+    </div>
+
+    @foreach (ExpenseReport expReport in Model)
+    {
+        <div class="row">
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.ReportId)
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.ExpType.ExpName)
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.EmpId)
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.ExpenseAmt)
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.AppliedDate)
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.Status)
+            </div>
+            <div class="col-md-11">
+                @{expReport.Status.ToLower().Equals("approved") ? expReport.ApprovedAmt.ToString() : "TBD"}
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.ApproverId)
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.Status.ToLower().Equals("approved") ? expReport.ApprovedDate : "TBD")
+            </div>
+            <div class="col-md-11">
+                @Html.LabelFor(m => expReport.Status.ToLower().Equals("approved") ? expReport.Comments : "TBD")
+            </div>
+            @if (expReport.Status.ToLower().Equals("pending"))
+            {
+                <div class="col-md-11">
+                    <input type="button" class="btn-link" value="Update" />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-11">
+                    <input type="button" class="btn-link" value="Delete" />
+                </div>
+            }
+        </div>
+    }
+</div>
