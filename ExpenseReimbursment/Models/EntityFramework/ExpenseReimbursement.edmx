@@ -40,9 +40,9 @@
           <Property Name="ReportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ExpId" Type="varchar" MaxLength="5" />
           <Property Name="EmpId" Type="int" />
-          <Property Name="ExpenseAmt" Type="int" Nullable="false" />
+          <Property Name="ExpenseAmt" Type="money" />
           <Property Name="ApproverId" Type="int" />
-          <Property Name="ApprovedAmt" Type="int" Nullable="false" />
+          <Property Name="ApprovedAmt" Type="money" />
           <Property Name="Comments" Type="varchar" MaxLength="255" />
           <Property Name="AppliedDate" Type="datetime" Nullable="false" />
           <Property Name="ApprovalDate" Type="datetime" />
@@ -115,6 +115,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="InsertEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="MiddleName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="RoleId" Type="varchar" Mode="In" />
+          <Parameter Name="EmailId" Type="varchar" Mode="In" />
+          <Parameter Name="ContactNum" Type="varchar" Mode="In" />
+          <Parameter Name="Gender" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertExpenseReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ExpId" Type="varchar" Mode="In" />
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+          <Parameter Name="ExpenseAmt" Type="money" Mode="In" />
+          <Parameter Name="Comments" Type="varchar" Mode="In" />
+          <Parameter Name="Status" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+          <Parameter Name="RoleId" Type="varchar" Mode="In" />
+          <Parameter Name="EmailId" Type="varchar" Mode="In" />
+          <Parameter Name="ContactNum" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateExpenseReport_Approver" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReportId" Type="int" Mode="In" />
+          <Parameter Name="ApproverId" Type="int" Mode="In" />
+          <Parameter Name="ApprovedAmt" Type="money" Mode="In" />
+          <Parameter Name="Comments" Type="varchar" Mode="In" />
+          <Parameter Name="Status" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateExpenseReport_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReportId" Type="int" Mode="In" />
+          <Parameter Name="ExpenseAmt" Type="money" Mode="In" />
+          <Parameter Name="Comments" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="uspRandChars" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="len" Type="int" Mode="In" />
+          <Parameter Name="min" Type="tinyint" Mode="In" />
+          <Parameter Name="range" Type="tinyint" Mode="In" />
+          <Parameter Name="exclude" Type="varchar" Mode="In" />
+          <Parameter Name="output" Type="varchar" Mode="InOut" />
+        </Function>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Emp_Details" EntityType="Self.Emp_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Emp_Roles" EntityType="Self.Emp_Roles" Schema="dbo" store:Type="Tables" />
@@ -188,9 +233,9 @@
           <Property Name="ReportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ExpId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="EmpId" Type="Int32" />
-          <Property Name="ExpenseAmt" Type="Int32" Nullable="false" />
+          <Property Name="ExpenseAmt" Type="Int32" />
           <Property Name="ApproverId" Type="Int32" />
-          <Property Name="ApprovedAmt" Type="Int32" Nullable="false" />
+          <Property Name="ApprovedAmt" Type="Int32" />
           <Property Name="Comments" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EmpApprover" Relationship="Self.FK__Expense_R__Appro__1DE57479" FromRole="Expense_Reports" ToRole="Emp_Details" />
           <NavigationProperty Name="Employee" Relationship="Self.FK__Expense_R__EmpId__1CF15040" FromRole="Expense_Reports" ToRole="Emp_Details" />
@@ -285,6 +330,51 @@
             <End Role="Expense_Reports" EntitySet="ExpenseReports1" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="Model.User" />
+          <FunctionImport Name="InsertEmployee">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="MiddleName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="RoleId" Mode="In" Type="String" />
+            <Parameter Name="EmailId" Mode="In" Type="String" />
+            <Parameter Name="ContactNum" Mode="In" Type="String" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertExpenseReport">
+            <Parameter Name="ExpId" Mode="In" Type="String" />
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="ExpenseAmt" Mode="In" Type="Decimal" />
+            <Parameter Name="Comments" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateEmployee">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="RoleId" Mode="In" Type="String" />
+            <Parameter Name="EmailId" Mode="In" Type="String" />
+            <Parameter Name="ContactNum" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateExpenseReport_Approver">
+            <Parameter Name="ReportId" Mode="In" Type="Int32" />
+            <Parameter Name="ApproverId" Mode="In" Type="Int32" />
+            <Parameter Name="ApprovedAmt" Mode="In" Type="Decimal" />
+            <Parameter Name="Comments" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateExpenseReport_Employee">
+            <Parameter Name="ReportId" Mode="In" Type="Int32" />
+            <Parameter Name="ExpenseAmt" Mode="In" Type="Decimal" />
+            <Parameter Name="Comments" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateUsers">
+            <Parameter Name="EmpId" Mode="In" Type="Int32" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="uspRandChars">
+            <Parameter Name="len" Mode="In" Type="Int32" />
+            <Parameter Name="min" Mode="In" Type="Byte" />
+            <Parameter Name="range" Mode="In" Type="Byte" />
+            <Parameter Name="exclude" Mode="In" Type="String" />
+            <Parameter Name="output" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -354,6 +444,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="InsertEmployee" FunctionName="Model.Store.InsertEmployee" />
+          <FunctionImportMapping FunctionImportName="InsertExpenseReport" FunctionName="Model.Store.InsertExpenseReport" />
+          <FunctionImportMapping FunctionImportName="UpdateEmployee" FunctionName="Model.Store.UpdateEmployee" />
+          <FunctionImportMapping FunctionImportName="UpdateExpenseReport_Approver" FunctionName="Model.Store.UpdateExpenseReport_Approver" />
+          <FunctionImportMapping FunctionImportName="UpdateExpenseReport_Employee" FunctionName="Model.Store.UpdateExpenseReport_Employee" />
+          <FunctionImportMapping FunctionImportName="UpdateUsers" FunctionName="Model.Store.UpdateUsers" />
+          <FunctionImportMapping FunctionImportName="uspRandChars" FunctionName="Model.Store.uspRandChars" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
