@@ -28,5 +28,6 @@ namespace ExpenseReimbursment.Models.EntityFramework
         public virtual Employee EmpApprover { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual ExpenseType ExpenseType { get; set; }
+        public string ApprovedDate { get; internal set; }
     }
 }

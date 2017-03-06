@@ -20,6 +20,10 @@ namespace ExpenseReimbursment.DAL
            return _expcontext.EmployeeDetails.ToList();
         }
 
+        public Role GetRoleByRoleCode(string roleCode)
+        {
+            return _expcontext.EmpRoles.Where(r => r.RoleCode.Equals(roleCode)).FirstOrDefault();
+        }
         public List<ExpenseReport> GetExpenseReportsbyApproverId(int empId)
         {
             return _expcontext.ExpReports.Where(exp => exp.ApproverId == empId).ToList();
@@ -35,9 +39,13 @@ namespace ExpenseReimbursment.DAL
             return _expcontext.EmployeeDetails.Where(emp => emp.EmpID == empId).FirstOrDefault();
         }
 
-        public ExpenseReport GetReportbyReportId(int reportId)
+        public ExpenseReport GetExpenseReportbyReportId(int reportId)
         {
             return _expcontext.ExpReports.Where(exp => exp.ReportId == reportId).FirstOrDefault();
+        }
+        public ExpenseType GetExpenseTypeByCode(string expCode)
+        {
+            return _expcontext.ExpTypes.Where(exp => exp.ExpenseCode.Equals(expCode)).FirstOrDefault();
         }
     }
 }
