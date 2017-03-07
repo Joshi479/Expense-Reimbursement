@@ -50,7 +50,7 @@ namespace ExpenseReimbursment.DAL
 
         public string GetUserPasswordbyUserId(int userId)
         {
-            return _expcontext.getUserPassword(userId).ToString();
+            return _expcontext.getUserPassword(userId).FirstOrDefault().ToString();
         }
     }
 }

@@ -253,6 +253,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Images\businessExpenses.jpeg" />
+    <Content Include="App_Data\Images\businessTravelExpenses.jpg" />
+    <Content Include="App_Data\Images\conveyanceExpense.jpg" />
+    <Content Include="App_Data\Images\medicalExpenses.jpg" />
+    <Content Include="App_Data\Images\shiftAllowance.jpg" />
+    <Content Include="App_Data\Images\telecomExpenses.jpg" />
+    <Content Include="App_Data\Images\travelExpenses.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -340,9 +347,7 @@
     <Content Include="Views\Employee\_UpdateReport.cshtml" />
     <Content Include="Views\Shared\_ApproveReport.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
