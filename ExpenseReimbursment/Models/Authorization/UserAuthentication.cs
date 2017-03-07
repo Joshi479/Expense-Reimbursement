@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ExpenseReimbursment.DAL;
 using ExpenseReimbursment.Models.Entities;
-using ExpenseReimbursment.Models.EntityFramework;
+
 
 
 namespace ExpenseReimbursment.Models.Authorization
 {
     public class UserAuthentication
     {
-        ExpenseReimbursementContext expContext = new ExpenseReimbursementContext();
+        public DbtoEntity _de;
+
+        public UserAuthentication()
+        {
+            _de = new DbtoEntity();
+        }
         public bool AuthenticateUser(UserEntity user)
         {
-            
+            var userCred = _de.GetUserCredentialsbyUserId(user.UserId);
+            if(user.Password.Equals(userCred.Password))
                 return true;
+            return false;
         }
-        public Role GetUserRole(int empId)
+        public EmpRole GetUserRole(int empId)
         {
-            string roleId = expContext.Employees.Where(e => e.EmpID == empId).FirstOrDefault().RoleID;
-            return expContext.Roles.Where(r => r.RoleCode == roleId).FirstOrDefault();
+            return _de.GetEmployeeByEmpID(empId).EmpRole;
         }
     }
 }

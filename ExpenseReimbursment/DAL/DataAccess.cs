@@ -47,5 +47,10 @@ namespace ExpenseReimbursment.DAL
         {
             return _expcontext.ExpenseTypes.Where(exp => exp.ExpenseCode.Equals(expCode)).FirstOrDefault();
         }
+
+        public string GetUserPasswordbyUserId(int userId)
+        {
+            return _expcontext.getUserPassword(userId).ToString();
+        }
     }
 }

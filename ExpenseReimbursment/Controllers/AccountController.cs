@@ -90,6 +90,10 @@ namespace ExpenseReimbursment.Controllers
                 {
                     return View("Admin/Index.cshtml");
                 }
+                else
+                {
+                    return View("Employee/Index.cshtml", role);
+                }
             }
             ViewBag.Message = "User Name and Password does not match. Please try Again.";
             return PartialView("_Login");
