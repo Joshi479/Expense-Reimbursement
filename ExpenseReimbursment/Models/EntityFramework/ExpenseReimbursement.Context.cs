@@ -187,5 +187,14 @@ namespace ExpenseReimbursment.Models.EntityFramework
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspRandChars", lenParameter, minParameter, rangeParameter, excludeParameter, output);
         }
+    
+        public virtual ObjectResult<string> getUserPassword(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("getUserPassword", userIdParameter);
+        }
     }
 }

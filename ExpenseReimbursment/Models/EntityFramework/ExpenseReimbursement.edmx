@@ -115,6 +115,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="getUserPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
         <Function Name="InsertEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FirstName" Type="varchar" Mode="In" />
           <Parameter Name="MiddleName" Type="varchar" Mode="In" />
@@ -375,6 +378,9 @@
             <Parameter Name="exclude" Mode="In" Type="String" />
             <Parameter Name="output" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="getUserPassword" ReturnType="Collection(String)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -451,6 +457,7 @@
           <FunctionImportMapping FunctionImportName="UpdateExpenseReport_Employee" FunctionName="Model.Store.UpdateExpenseReport_Employee" />
           <FunctionImportMapping FunctionImportName="UpdateUsers" FunctionName="Model.Store.UpdateUsers" />
           <FunctionImportMapping FunctionImportName="uspRandChars" FunctionName="Model.Store.uspRandChars" />
+          <FunctionImportMapping FunctionImportName="getUserPassword" FunctionName="Model.Store.getUserPassword" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
