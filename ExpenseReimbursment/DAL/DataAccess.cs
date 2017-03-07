@@ -9,43 +9,43 @@ namespace ExpenseReimbursment.DAL
 {
     public class DataAccess
     {
-        ExpenseReimbusementContext _expcontext;
+        ExpenseReimbursementContext _expcontext;
         public DataAccess()
         {
-            _expcontext = new ExpenseReimbusementContext();
+            _expcontext = new ExpenseReimbursementContext();
         } 
 
         public List<Employee> GetEmployeeList()
         {
-           return _expcontext.EmployeeDetails.ToList();
+           return _expcontext.Employees.ToList();
         }
 
         public Role GetRoleByRoleCode(string roleCode)
         {
-            return _expcontext.EmpRoles.Where(r => r.RoleCode.Equals(roleCode)).FirstOrDefault();
+            return _expcontext.Roles.Where(r => r.RoleCode.Equals(roleCode)).FirstOrDefault();
         }
         public List<ExpenseReport> GetExpenseReportsbyApproverId(int empId)
         {
-            return _expcontext.ExpReports.Where(exp => exp.ApproverId == empId).ToList();
+            return _expcontext.ExpenseReports.Where(exp => exp.ApproverId == empId).ToList();
         }
 
         public List<ExpenseReport> GetExpenseReportsbyEmpId(int empId)
         {
-            return _expcontext.ExpReports.Where(exp => exp.EmpId == empId).ToList();
+            return _expcontext.ExpenseReports.Where(exp => exp.EmpId == empId).ToList();
         }
 
         public Employee GetEmployeebyEmpId(int empId)
         {
-            return _expcontext.EmployeeDetails.Where(emp => emp.EmpID == empId).FirstOrDefault();
+            return _expcontext.Employees.Where(emp => emp.EmpID == empId).FirstOrDefault();
         }
 
         public ExpenseReport GetExpenseReportbyReportId(int reportId)
         {
-            return _expcontext.ExpReports.Where(exp => exp.ReportId == reportId).FirstOrDefault();
+            return _expcontext.ExpenseReports.Where(exp => exp.ReportId == reportId).FirstOrDefault();
         }
         public ExpenseType GetExpenseTypeByCode(string expCode)
         {
-            return _expcontext.ExpTypes.Where(exp => exp.ExpenseCode.Equals(expCode)).FirstOrDefault();
+            return _expcontext.ExpenseTypes.Where(exp => exp.ExpenseCode.Equals(expCode)).FirstOrDefault();
         }
     }
 }

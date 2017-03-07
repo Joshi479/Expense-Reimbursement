@@ -235,7 +235,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExpenseReimbursement.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\EntityFramework\ExpenseReimbusementContext.cs" />
     <Compile Include="Models\EntityFramework\ExpenseReport.cs">
       <DependentUpon>ExpenseReimbursement.tt</DependentUpon>
     </Compile>

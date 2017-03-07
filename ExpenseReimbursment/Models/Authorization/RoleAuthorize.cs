@@ -10,7 +10,7 @@ namespace ExpenseReimbursment.Models.Authorization
 {
     public class RoleAuthorize: RoleProvider
     {
-        ExpenseReimbusementContext expContext = new ExpenseReimbusementContext();
+        ExpenseReimbursementContext expContext = new ExpenseReimbursementContext();
         private string _applictionName;
 
         public override string ApplicationName
@@ -52,7 +52,7 @@ namespace ExpenseReimbursment.Models.Authorization
 
         public override string[] GetRolesForUser(string username)
         {
-            return new string[] { expContext.EmployeeDetails.Where(u => u.EmpID == Convert.ToInt32(username)).FirstOrDefault().RoleID };
+            return new string[] { expContext.Employees.Where(u => u.EmpID == Convert.ToInt32(username)).FirstOrDefault().RoleID };
         }
 
         public override string[] GetUsersInRole(string roleName)

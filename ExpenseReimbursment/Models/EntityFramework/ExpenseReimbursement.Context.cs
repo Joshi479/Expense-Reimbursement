@@ -30,7 +30,7 @@ namespace ExpenseReimbursment.Models.EntityFramework
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ExpenseType> ExpenseTypes { get; set; }
-        public virtual DbSet<ExpenseReport> ExpenseReports1 { get; set; }
+        public virtual DbSet<ExpenseReport> ExpenseReports { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
         public virtual int InsertEmployee(string firstName, string middleName, string lastName, string roleId, string emailId, string contactNum, string gender)
@@ -167,25 +167,25 @@ namespace ExpenseReimbursment.Models.EntityFramework
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateUsers", empIdParameter, passwordParameter);
         }
     
-        public virtual int uspRandChars(Nullable<int> len, Nullable<byte> min, Nullable<byte> range, string exclude, ObjectParameter output)
-        {
-            var lenParameter = len.HasValue ?
-                new ObjectParameter("len", len) :
-                new ObjectParameter("len", typeof(int));
+        //public virtual int uspRandChars(Nullable<int> len, Nullable<byte> min, Nullable<byte> range, string exclude, ObjectParameter output)
+        //{
+        //    var lenParameter = len.HasValue ?
+        //        new ObjectParameter("len", len) :
+        //        new ObjectParameter("len", typeof(int));
     
-            var minParameter = min.HasValue ?
-                new ObjectParameter("min", min) :
-                new ObjectParameter("min", typeof(byte));
+        //    var minParameter = min.HasValue ?
+        //        new ObjectParameter("min", min) :
+        //        new ObjectParameter("min", typeof(byte));
     
-            var rangeParameter = range.HasValue ?
-                new ObjectParameter("range", range) :
-                new ObjectParameter("range", typeof(byte));
+        //    var rangeParameter = range.HasValue ?
+        //        new ObjectParameter("range", range) :
+        //        new ObjectParameter("range", typeof(byte));
     
-            var excludeParameter = exclude != null ?
-                new ObjectParameter("exclude", exclude) :
-                new ObjectParameter("exclude", typeof(string));
+        //    var excludeParameter = exclude != null ?
+        //        new ObjectParameter("exclude", exclude) :
+        //        new ObjectParameter("exclude", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspRandChars", lenParameter, minParameter, rangeParameter, excludeParameter, output);
-        }
+        //    return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspRandChars", lenParameter, minParameter, rangeParameter, excludeParameter, output);
+        //}
     }
 }

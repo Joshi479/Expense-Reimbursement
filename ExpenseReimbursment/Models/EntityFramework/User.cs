@@ -15,6 +15,6 @@ namespace ExpenseReimbursment.Models.EntityFramework
     public partial class User
     {
         public int UserId { get; set; }
-        public byte[] UserPassword { get; set; }
+        public string UserPassword { get; set; }
     }
 }
