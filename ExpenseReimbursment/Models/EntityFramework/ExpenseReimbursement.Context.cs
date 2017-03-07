@@ -30,7 +30,7 @@ namespace ExpenseReimbursment.Models.EntityFramework
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ExpenseType> ExpenseTypes { get; set; }
-        public virtual DbSet<ExpenseReport> ExpenseReports1 { get; set; }
+        public virtual DbSet<ExpenseReport> ExpenseReports { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
         public virtual int InsertEmployee(string firstName, string middleName, string lastName, string roleId, string emailId, string contactNum, string gender)

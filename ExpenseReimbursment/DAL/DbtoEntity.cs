@@ -147,5 +147,14 @@ namespace ExpenseReimbursment.DAL
 
             return repEntity;
         }
+
+        public UserEntity GetUserCredentialsbyUserId(int empId)
+        {
+            var user = new UserEntity(); 
+            user.UserId = empId;
+            user.Password = _da.GetUserPasswordbyUserId(empId);
+
+            return user;
+        }
     }
 }

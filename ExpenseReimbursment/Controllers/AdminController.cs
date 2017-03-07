@@ -55,7 +55,7 @@ namespace ExpenseReimbursment.Controllers
         [Authorize(Roles = "ADM")]
         public PartialViewResult ReportDetails(int reportId)
         {
-            var report = _da.GetReportbyReportId(reportId);
+            var report = _da.GetExpenseReportbyReportId(reportId);
             return PartialView("~/Shared/_ReportDetails.cshtml", report);
         }
 
