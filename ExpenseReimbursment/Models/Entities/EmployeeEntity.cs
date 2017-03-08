@@ -7,7 +7,7 @@ namespace ExpenseReimbursment.Models.Entities
 {
     public class EmployeeEntity
     {
-        private int _empId;
+        private int? _empId;
         private string _firstName;
         private string _middleName;
         private string _lastname;
@@ -17,7 +17,7 @@ namespace ExpenseReimbursment.Models.Entities
         private string _contactNumber;
         private EmpRole _empRole;
 
-        public int EmpId
+        public int? EmpId
         {
             get
             {

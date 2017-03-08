@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ExpenseReimbursment.Models.Entities;
+using ExpenseReimbursment.Models;
 
 namespace ExpenseReimbursment.DAL
 {
@@ -38,7 +39,7 @@ namespace ExpenseReimbursment.DAL
 
         
 
-        public List<ExpenseReportEntity> GetExpenseReportsbyEmpId(int empId)
+        public List<ExpenseReportEntity> GetExpenseReportsbyEmpId(int? empId)
         {
             var repList = _da.GetExpenseReportsbyEmpId(empId);
             List<ExpenseReportEntity> reportList = new List<ExpenseReportEntity>();
@@ -64,14 +65,14 @@ namespace ExpenseReimbursment.DAL
             return reportList;
         }
 
-        public List<ExpenseReportEntity> GetExpenseReportsbyApproverId(int approverId)
+        public List<ExpenseReportEntity> GetExpenseReportsbyApproverRole(string approverRole)
         {
-            var empList = _da.GetExpenseReportsbyApproverId(approverId);
+            var rptList = _da.GetExpenseReportsbyApproverRole(approverRole);
             List<ExpenseReportEntity> reportList = new List<ExpenseReportEntity>();
-            foreach (var rep in reportList)
+            foreach (var rep in rptList)
             {
                 var report = new ExpenseReportEntity();
-                report.AppliedDate = rep.AppliedDate;
+                report.AppliedDate = rep.AppliedDate.ToString("MM/dd/yyyy");
                 report.ApprovedAmt = rep.ApprovedAmt;
                 report.ApprovedDate = rep.ApprovedDate;
                 if (rep.ApproverId != Convert.ToInt32(DBNull.Value))
@@ -81,8 +82,8 @@ namespace ExpenseReimbursment.DAL
                 report.ApproverId = rep.ApproverId;
                 report.Employee = GetEmployeeByEmpID(rep.EmpId);
                 report.ExpenseAmt = rep.ExpenseAmt;
-                report.ExpTyCode = rep.ExpTyCode;
-                report.ExpType = GetExpenseTypeByCode(rep.ExpTyCode);
+                report.ExpTyCode = rep.ExpId;
+                report.ExpType = GetExpenseTypeByCode(rep.ExpId);
                 report.ReportId = rep.ReportId;
                 report.Status = rep.Status;
                 reportList.Add(report);
@@ -90,7 +91,7 @@ namespace ExpenseReimbursment.DAL
             return reportList;
         }
 
-        public EmployeeEntity GetEmployeeByEmpID(int empId)
+        public EmployeeEntity GetEmployeeByEmpID(int? empId)
         {
             var emp = _da.GetEmployeebyEmpId(empId);
             var employee = new EmployeeEntity();
@@ -155,6 +156,46 @@ namespace ExpenseReimbursment.DAL
             user.Password = _da.GetUserPasswordbyUserId(empId);
 
             return user;
+        }
+
+        public int InsertEmployee(RegisterViewModel employee)
+        {
+            var emp = new EmployeeEntity();
+            emp.FirstName = employee.FirstName;
+            emp.MiddleName = employee.MiddleName;
+            emp.Lastname = employee.LastName;
+            emp.RoleId = employee.RoleId;
+            emp.EmailId = employee.Email;
+            emp.ContactNumber = employee.PhnNumber;
+            emp.Gender = employee.Gender;
+
+            return _da.InsertEmployee(emp);             
+        }
+
+        public void UpdateEmployee(EmployeeEntity emp)
+        {
+            _da.UpdateEmployee(emp);
+        }
+
+        public int InsertReport(ReportViewModel report)
+        {
+            var rpt = new ExpenseReportEntity();
+            rpt.EmpId = report.EmpId;
+            rpt.ExpTyCode = report.ReportType;
+            rpt.ExpenseAmt = report.ExpenseAmt;
+            rpt.Comments = report.Comments;
+
+            return _da.InsertReport(rpt);
+        }
+
+        public void UpdateReportApprover(ExpenseReportEntity rpt)
+        {
+            _da.UpdateReportApprover(rpt);
+        }
+
+        public void UpdateReportEmployee(ExpenseReportEntity rpt)
+        {
+            _da.UpdateReportEmployee(rpt);
         }
     }
 }

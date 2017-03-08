@@ -269,6 +269,8 @@
       <DependentUpon>ExpenseReimbursement.edmx</DependentUpon>
       <LastGenOutput>ExpenseReimbursement.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\ApplicationJS\adminJS.js" />
+    <Content Include="Scripts\ApplicationJS\empJS.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

@@ -12,50 +12,50 @@ namespace ExpenseReimbursment.Controllers
     public class EmployeeController : Controller
     {
         DataAccess _da = new DataAccess();
+        DbtoEntity _de = new DbtoEntity();
         // GET: Employee
         public ActionResult Index()
         {
             return View();
         }
         [HttpGet]
-        public PartialViewResult EmployeeDetails(int empId)
+        public PartialViewResult EmployeeDetails(int? empId)
         {
-            var emp = _da.GetEmployeebyEmpId(empId); 
+            var emp = _de.GetEmployeeByEmpID(empId); 
             return PartialView("~/Shared/_EmployeeDetails.cshtml", empId);
         }
         [HttpGet]
         public PartialViewResult GenerateExpenseReport()
         {
-            //code to get Textboxes for approving based on reportId
-            return PartialView("_GenerateReport");
+            ReportViewModel report = new ReportViewModel();
+            return PartialView("_GenerateReport", report);
         }
 
         [HttpPost]
         [ActionName("GenerateExpenseReport")]
-        public ActionResult GenerateExpenseReport_Post(ExpenseReportEntity expRpt)
+        public ActionResult GenerateExpenseReport_Post(ReportViewModel expRpt)
         {
-            //to insert report in db
+            _de.InsertReport(expRpt);
             return RedirectToAction("GetReportList", new { empId = expRpt.EmpId });
         }
 
         [HttpGet]
-        public PartialViewResult GetReportList(int empId)
+        public PartialViewResult GetReportList(int? empId)
         {
-            var reportList = _da.GetExpenseReportsbyEmpId(empId);
+            var reportList = _de.GetExpenseReportsbyEmpId(empId);
             return PartialView("_ViewReports", reportList);
         }
 
         [HttpGet]
-        public PartialViewResult GetReportListApproval(int empId)
+        public PartialViewResult GetReportListApproval(string approverRole)
         {
-            var reportList = _da.GetExpenseReportsbyApproverId(empId);
-            return PartialView("_ViewReports");
+            var reportList = _de.GetExpenseReportsbyApproverRole(approverRole);
+            return PartialView("_ViewReports", reportList);
         }
 
         [HttpGet]
         public PartialViewResult ApproveExpenseReport()
         {
-            //code to get Textboxes for approving based on reportId
             return PartialView("~/Shared/_ApproveReport.cshtml");
         }
 
@@ -63,7 +63,7 @@ namespace ExpenseReimbursment.Controllers
         [ActionName("ApproveExpenseReport")]
         public JsonResult ApproveExpenseReport_Post(ExpenseReportEntity rpt)
         {
-            //code to insert approved report based on rptId
+            _de.UpdateReportApprover(rpt);
             return Json(new { status = rpt.Status, amount = rpt.ApprovedAmt, comments = rpt.Comments, date = rpt.ApprovedDate });
         }
 
@@ -78,7 +78,7 @@ namespace ExpenseReimbursment.Controllers
         [ActionName("UpdateExpenseReport")]
         public JsonResult UpdateExpenseReport_Post(ExpenseReportEntity rpt)
         {
-            //code to insert approved report based on rptId
+            _de.UpdateReportEmployee(rpt);
             return Json(new { amount = rpt.ExpenseAmt, date = rpt.AppliedDate });
         }
     }

@@ -12,26 +12,39 @@ namespace ExpenseReimbursment.Controllers
     public class AdminController : Controller
     {
         DataAccess _da = new DataAccess();
+        DbtoEntity _de = new DbtoEntity();
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Index(string message = "")
         {
-            return View();
+            return View(message);
         }
 
         [HttpGet]
-        [Authorize(Roles ="ADM")]
+        [Authorize(Roles = "ADM")]
         public PartialViewResult RegisterEmployee()
         {
-            return PartialView("_Register");
+            RegisterViewModel model = new RegisterViewModel();
+            model.Message = String.Empty;
+            return PartialView("_Register", model);
         }
 
         [HttpPost]
         [Authorize(Roles = "ADM")]
         [ActionName("RegisterEmployee")]
-        public PartialViewResult RegisterEmployee_Post(RegisterViewModel model)
+        public ActionResult RegisterEmployee_Post(RegisterViewModel model)
         {
-            //code to insert into empdetails and user tables
-            return PartialView("_Register");
+            string Message = string.Empty;
+            try
+            {
+                var userId = _de.InsertEmployee(model);
+                Message = "New Employee created with employee Id" + userId.ToString();
+            }
+            catch (Exception ex)
+            {
+                Message = "Error occured while creating employee" + ex.InnerException.Message ;
+            }
+            
+            return RedirectToAction("Index", new { Message });
         }
 
         [HttpGet]
@@ -41,16 +54,7 @@ namespace ExpenseReimbursment.Controllers
             var empList = _da.GetEmployeeList();
             return PartialView("_EmpList", empList);
         }
-
         
-        [HttpGet]
-        [Authorize(Roles = "ADM")]
-        public PartialViewResult ReportList(int empId)
-        {
-            var reportList = _da.GetExpenseReportsbyApproverId(empId);
-            return PartialView("~/Shared/_ReportList.cshtml", reportList);
-        }
-
         [HttpGet]
         [Authorize(Roles = "ADM")]
         public PartialViewResult ReportDetails(int reportId)
@@ -61,9 +65,9 @@ namespace ExpenseReimbursment.Controllers
 
         [HttpGet]
         [Authorize(Roles = "ADM")]
-        public PartialViewResult EditEmployeeDetails()
+        public PartialViewResult EditEmployeeDetails(EmployeeEntity emp)
         {
-            return PartialView("_EditEmployeeDetails");
+            return PartialView("_EditEmployeeDetails", emp);
         }
 
         [HttpPost]
@@ -71,7 +75,7 @@ namespace ExpenseReimbursment.Controllers
         [ActionName("EditEmployeeDetails")]
         public JsonResult EditEmployeeDetails_Post(EmployeeEntity emp)
         {
-            //code to insert edited employee based on empid
+            
             return Json(new {emialId = emp.EmailId, Phone = emp.ContactNumber, role = emp.EmpRole.RoleName });
         }
 

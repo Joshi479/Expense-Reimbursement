@@ -1,8 +1,8 @@
-﻿
+﻿@model string
 @{
     ViewBag.Title = "GVB Administration";
 }
-<div class="navbar navbar-inverse">
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -10,13 +10,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            @Html.ActionLink("Expense Reimbursement", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Register Employee", "RegisterEmployee", "Admin")</li>
                 <li>@Html.ActionLink("Employee List", "EmployeeList", "Admin")</li>
                 <li>@Html.ActionLink("View Reports", "GetReportList", "Employee")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
 </div>
@@ -25,5 +29,9 @@
 </div>
 
 <div id="adminBody" class="container">
+    
+</div>
 
+<div>
+@Html.ValidationMessageFor(m => m)
 </div>

@@ -88,7 +88,8 @@ namespace ExpenseReimbursment.Models
         public string PhnNumber { get; set; }
         [Required]
         [Display(Name = "Role")]
-        public string Role { get; set; }
+        public string RoleId { get; set; }
+        public string Message { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -122,12 +123,17 @@ namespace ExpenseReimbursment.Models
 
     public class ReportViewModel
     {
+        public int? EmpId { get; set; }
         [Required]
         [Display(Name = "Report Type")]
         public string ReportType { get; set; }
 
         [Required]
         [Display(Name = "Expense Amount")]
-        public string ExpenseAmt { get; set; }
+        public decimal? ExpenseAmt { get; set; }
+
+        [Required]
+        [Display(Name = "Comments")]
+        public string Comments { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace ExpenseReimbursment.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -96,24 +96,24 @@ namespace ExpenseReimbursment.Controllers
                 }
             }
             ViewBag.Message = "User Name and Password does not match. Please try Again.";
-            return PartialView("_Login");
+            //return PartialView("_Login");
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            //var result = await SignInManager.PasswordSignInAsync(model.UserId.ToString(), model.Password, model.RememberMe, shouldLockout: false);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Invalid login attempt.");
-            //        return View(model);
-            //}
+            var result = await SignInManager.PasswordSignInAsync(model.UserId.ToString(), model.Password, model.RememberMe, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("sendcode", new { returnurl = returnUrl, rememberme = model.RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "invalid login attempt.");
+                    return View(model);
+            }
         }
 
         //

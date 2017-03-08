@@ -7,12 +7,12 @@ namespace ExpenseReimbursment.Models.Entities
 {
     public class ExpenseReportEntity
     {
-        private int _reportId;
+        private int? _reportId;
         private string _expTyCode;
-        private int _empId;
-        private int _expenseAmt;
-        private int _approverId;
-        private int _approvedAmt;
+        private int? _empId;
+        private decimal? _expenseAmt;
+        private int? _approverId;
+        private decimal? _approvedAmt;
         private string _comments;
         private string _appliedDate;
         private string _approvedDate;
@@ -21,7 +21,7 @@ namespace ExpenseReimbursment.Models.Entities
         private EmployeeEntity _approver;
         private ExpenseTypeEntity _expType;
 
-        public int ReportId
+        public int? ReportId
         {
             get
             {
@@ -45,7 +45,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
-        public int EmpId
+        public int? EmpId
         {
             get
             {
@@ -57,7 +57,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
-        public int ExpenseAmt
+        public decimal? ExpenseAmt
         {
             get
             {
@@ -69,7 +69,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
-        public int ApproverId
+        public int? ApproverId
         {
             get
             {
@@ -81,7 +81,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
-        public int ApprovedAmt
+        public decimal? ApprovedAmt
         {
             get
             {

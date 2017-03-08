@@ -1,5 +1,5 @@
 ﻿@using ExpenseReimbursment.Models.Entities
-@model List<Employee>
+@model List<EmployeeEntity>
 
 
 <div class="container">
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    @foreach (Employee emp in Model)
+    @foreach (EmployeeEntity emp in Model)
     {
         <div class="row">
             <div class="col-md-9">
@@ -58,7 +58,7 @@
                 @Html.LabelFor(m => emp.EmpRole.RoleName)
             </div>
             <div class="col-md-9">
-                <input type="button" class="btn-link" value="Edit" />
+                <input div="editEmp" type="button" class="btn-link" value="Edit" />
             </div>
         </div>
     }
