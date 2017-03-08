@@ -88,11 +88,11 @@ namespace ExpenseReimbursment.Controllers
                 var role = _authUser.GetUserRole(_user.UserId);
                 if (role.RoleCode == "ADM")
                 {
-                    return View("Admin/Index.cshtml");
+                    return View("~/Views/Admin/Index.cshtml");
                 }
                 else
                 {
-                    return View("Employee/Index.cshtml", role);
+                    return View("~/ViewsEmployee/Index.cshtml", role);
                 }
             }
             ViewBag.Message = "User Name and Password does not match. Please try Again.";
