@@ -1,87 +1,121 @@
 ﻿
 @using ExpenseReimbursment.Models.Entities
-@model List<ExpenseReport>
+@model List<ExpenseReportEntity>
+
 
 <div class="container">
     <div class="row">
-        <div class="col-md-10">
-            Report Id
-        </div>
-        <div class="col-md-10">
-            Report Type
-        </div>
-        <div class="col-md-10">
-            Applied Employee
-        </div>
-        <div class="col-md-10">
-            Expense Amount
-        </div>
-        <div class="col-md-10">
-            Applied Date
-        </div>
-        <div class="col-md-10">
-            Status
-        </div>
-        <div class="col-md-10">
-            Approved Amount
-        </div>
-        <div class="col-md-10">
-            Approver Id
-        </div>
-        <div class="col-md-10">
-            Approved Date
-        </div>
-        <div class="col-md-10">
-            Comments
-        </div>
-
+        <h4>Employee Reports</h4>
     </div>
+    <div>
+        <table id="reportTable">
+            <thead>
+            <td>
+                Report Id
+            </td>
+            <td>
+                Report Type
+            </td>
+            <td>
+                Applied Employee
+            </td>
+            <td>
+                Expense Amount
+            </td>
+            <td>
+                Applied Date
+            </td>
+            <td>
+                Status
+            </td>
+            <td>
+                Approved Amount
+            </td>
+            <td>
+                Approver Id
+            </td>
+            <td>
+                Approved Date
+            </td>
+            <td>
+                Comments
+            </td>
+            </thead>
 
-    @foreach (ExpenseReport expReport in Model)
-    {
-        <div class="row">
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.ReportId)
-            </div>
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.ExpType.ExpName)
-            </div>
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.EmpId)
-            </div>
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.ExpenseAmt)
-            </div>
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.AppliedDate)
-            </div>
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.Status)
-            </div>
-            <div class="col-md-11">
-                @{expReport.Status.ToLower().Equals("approved") ? expReport.ApprovedAmt.ToString() : "TBD"}
-            </div>
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.ApproverId)
-            </div>
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.Status.ToLower().Equals("approved") ? expReport.ApprovedDate : "TBD")
-            </div>
-            <div class="col-md-11">
-                @Html.LabelFor(m => expReport.Status.ToLower().Equals("approved") ? expReport.Comments : "TBD")
-            </div>
-            @if (expReport.Status.ToLower().Equals("pending"))
+
+            @foreach (ExpenseReportEntity expReport in Model)
             {
-                <div class="col-md-11">
-                    <input type="button" class="btn-link" value="Update" />
-                </div>
+                <tr>
+                    <td>
+                        @expReport.ReportId
+                    </td>
+                    <td>
+                        @expReport.ExpType.ExpName
+                    </td>
+                    <td>
+                        @expReport.EmpId
+                    </td>
+                    <td>
+                        @expReport.ExpenseAmt
+                    </td>
+                    <td>
+                        @expReport.AppliedDate
+                    </td>
+                    <td>
+                        @expReport.Status
+                    </td>
+
+                    @if (expReport.Status.ToLower().Equals("approved"))
+                {
+                        <td>
+                            expReport.ApprovedAmt.ToString();
+                        </td>
+                    }
+                    else
+                    {
+                        <td>TBD</td>
+                    }
+                    @if (expReport.Status.ToLower().Equals("approved"))
+                {
+                        <td>
+                            expReport.ApprovedDate;
+                        </td>
+                    }
+                    else
+                    {
+                        <td>TBD</td>
+                    }
+                    @if (expReport.Status.ToLower().Equals("approved"))
+                {
+                        <td>
+                            expReport.ApproverId.ToString();
+                        </td>
+                    }
+                    else
+                    {
+                        <td>TBD</td>
+                    }
+                    <td>
+                        expReport.Comments
+                    </td>
+                    @if (expReport.Status.ToLower().Equals("approved"))
+                {
+                        <td>
+                            <div class="col-md-11">
+                                <input type="button" class="btn-link" value="Delete" />
+                            </div>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <div class="col-md-11">
+                                <input type="button" class="btn-link" value="Update" />
+                            </div>
+                        </td>
+                    }
+                </tr>
             }
-            else
-            {
-                <div class="col-md-11">
-                    <input type="button" class="btn-link" value="Delete" />
-                </div>
-            }
-        </div>
-    }
+        </table>
+    </div>
 </div>

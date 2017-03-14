@@ -1,37 +1,57 @@
 ﻿@using ExpenseReimbursment.Models.Entities
-@model Employee
+@model EmployeeEntity
 
 <div class="container">
-    <div class="row">
-        <div class="col-lg-2">
-            Employee Name
+    <div>
+        <h3>Employee Details</h3>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-2">Employee Name</label>
+            <div class="col-md-3">
+                <label class="form-control">@(Model.FirstName + " " + Model.MiddleName + " " + Model.Lastname)</label>
+            </div>
         </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.FirstName + " " + Model.MiddleName + " " + Model.Lastname)
+        <div class="form-group">
+            <label class="control-label col-md-2">Gender</label>
+            <div class="col-md-3">
+                <label class="form-control">@Model.Gender</label>
+            </div>
         </div>
-        <div class="col-lg-2">
-            Grnder
+        <div class="form-group">
+            <label class="control-label col-md-2">E-mail</label>
+            <div class="col-md-3">
+                <label class="form-control">@Model.EmailId</label>
+            </div>
         </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.Gender)
+        <div class="form-group">
+            <label class="control-label col-md-2">Phone Number</label>
+            <div class="col-md-3">
+                <label class="form-control">@Model.ContactNumber</label>
+            </div>
         </div>
-        <div class="col-lg-2">
-            E-mail
+        <div class="form-group">
+            <label class="control-label col-md-2">Role</label>
+            <div class="col-md-3">
+                <label class="form-control">@Model.EmpRole.RoleName</label>
+            </div>
         </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.EmailId)
-        </div>
-        <div class="col-lg-2">
-            Phone Number
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.ContactNumber)
-        </div>
-        <div class="col-lg-2">
-            Role
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.EmpRole.RoleName)
-        </div>
+        @if (!Model.RoleId.Equals("ADM"))
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnLogin" type="button" value="Edit Details" class="btn btn-default" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnLogin" type="button" value="back to list" class="btn-link" />
+                </div>
+            </div>
+        }
+
     </div>
 </div>

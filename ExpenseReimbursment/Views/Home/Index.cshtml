@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -9,15 +10,21 @@
     <p class="lead">A Reimbursement tool for all your expenses</p>
 </div>
 
-<div class="row">
-    <div id="empDiv" class="col-lg-2 content-centre">
+<div class="login-div">
+    <div id="empDiv" class="content-centre">
        <input id="EmpLogin" type="button" class="btn-link" value="Employee"/>
+        <div id="empLoginDiv" class="container">
+
+        </div>
     </div>
-    <div id="adminDiv" class="col-lg-2 content-centre">
+    <div id="adminDiv" class="content-centre">
         <input id="AdminLogin" type="button" class="btn-link" value="Administration" />
+        <div id="admLoginDiv" class="container">
+
+        </div>
+    </div>
+    <div id="errorMsg" class="content-centre">
+        
     </div>
 </div>
 
-<div id="loginDiv" class="container login-div">
-
-</div>

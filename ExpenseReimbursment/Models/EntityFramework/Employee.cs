@@ -29,6 +29,7 @@ namespace ExpenseReimbursment.Models.EntityFramework
         public string EmailID { get; set; }
         public string ContactNum { get; set; }
         public string Gender { get; set; }
+        public string EmpStatus { get; set; }
     
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

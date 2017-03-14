@@ -3,63 +3,67 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-9">
-            Employee Id
-        </div>
-        <div class="col-md-9">
-            First Name
-        </div>
-        <div class="col-md-9">
-            Middle Name
-        </div>
-        <div class="col-md-9">
-            Last Name
-        </div>
-        <div class="col-md-9">
-            Gender
-        </div>
-        <div class="col-md-9">
-            E-mail
-        </div>
-        <div class="col-md-9">
-            Phone
-        </div>
-        <div class="col-md-9">
-            Role
-        </div>
-    </div>
-
-    @foreach (EmployeeEntity emp in Model)
-    {
-        <div class="row">
-            <div class="col-md-9">
-                <input type="button" class="btn-link" value="@emp.EmpId">
-            </div>
-            <div class="col-md-9">
-                @Html.LabelFor(m => emp.FirstName)
-            </div>
-            <div class="col-md-9">
-                @Html.LabelFor(m => emp.MiddleName)
-            </div>
-            <div class="col-md-9">
-                @Html.LabelFor(m => emp.Lastname)
-            </div>
-            <div class="col-md-9">
-                @Html.LabelFor(m => emp.Gender)
-            </div>
-            <div class="col-md-9">
-                @Html.LabelFor(m => emp.EmailId)
-            </div>
-            <div class="col-md-9">
-                @Html.LabelFor(m => emp.ContactNumber)
-            </div>
-            <div class="col-md-9">
-                @Html.LabelFor(m => emp.EmpRole.RoleName)
-            </div>
-            <div class="col-md-9">
-                <input div="editEmp" type="button" class="btn-link" value="Edit" />
-            </div>
-        </div>
-    }
+    <table id="empListTable">
+        <thead>
+            <td>
+                Employee Id
+            </td>
+            <td>
+                First Name
+            </td>
+            <td>
+                Middle Name
+            </td>
+            <td>
+                Last Name
+            </td>
+            <td>
+                Gender
+            </td>
+            <td>
+                E-mail
+            </td>
+            <td>
+                Contact Number
+            </td>
+            <td>
+                Role
+            </td>
+            <td>
+                Action
+            </td>
+        </thead>
+        @foreach (EmployeeEntity emp in Model)
+        {
+            <tr>
+                <td>
+                    <input class="btn-link" type="button" value="@emp.EmpId" onclick="EmployeeDetails(@emp.EmpId)" />
+                </td>
+                <td>
+                    @emp.FirstName
+                </td>
+                <td>
+                    @emp.MiddleName
+                </td>
+                <td>
+                    @emp.Lastname
+                </td>
+                <td>
+                    @emp.Gender
+                </td>
+                <td>
+                    @emp.EmailId
+                </td>
+                <td>
+                    @emp.ContactNumber
+                </td>
+                <td>
+                    @emp.EmpRole.RoleName
+                </td>
+                <td>
+                    <input class="btn-link" type="button" value="Deactivate" onclick="EmpDeactivate(@emp.EmpId)" />
+                </td>
+            </tr>
+        }
+    </table>
 </div>

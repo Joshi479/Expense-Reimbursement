@@ -95,22 +95,15 @@ namespace ExpenseReimbursment.Models
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The Password must be at least 8 characters long.", MinimumLength = 8)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "New Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match. Please try again")]
         public string ConfirmPassword { get; set; }
-
-        public string Code { get; set; }
     }
 
     public class ForgotPasswordViewModel
@@ -124,6 +117,8 @@ namespace ExpenseReimbursment.Models
     public class ReportViewModel
     {
         public int? EmpId { get; set; }
+        public string Name { get; set; }
+        public string RoleId { get; set; }
         [Required]
         [Display(Name = "Report Type")]
         public string ReportType { get; set; }
@@ -135,5 +130,6 @@ namespace ExpenseReimbursment.Models
         [Required]
         [Display(Name = "Comments")]
         public string Comments { get; set; }
+        public string Message { get; set; }
     }
 }

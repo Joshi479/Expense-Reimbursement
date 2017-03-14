@@ -49,7 +49,7 @@ namespace ExpenseReimbursment.DAL
                 report.AppliedDate = rep.AppliedDate.ToString("MM/dd/YYYY");
                 report.ApprovedAmt = rep.ApprovedAmt;
                 report.ApprovedDate = Convert.ToString(rep.ApprovalDate);
-                if (rep.ApproverId != Convert.ToInt32(DBNull.Value))
+                if (rep.ApproverId != null)
                 {
                     report.Approver = GetEmployeeByEmpID(Convert.ToInt32(rep.ApproverId));
                 }
@@ -74,10 +74,10 @@ namespace ExpenseReimbursment.DAL
                 var report = new ExpenseReportEntity();
                 report.AppliedDate = rep.AppliedDate.ToString("MM/dd/yyyy");
                 report.ApprovedAmt = rep.ApprovedAmt;
-                report.ApprovedDate = rep.ApprovedDate;
                 if (rep.ApproverId != Convert.ToInt32(DBNull.Value))
                 {
                     report.Approver = GetEmployeeByEmpID(rep.ApproverId);
+                    report.ApprovedDate = ((DateTime)rep.ApprovalDate).ToString("MM/dd/yyyy");
                 }
                 report.ApproverId = rep.ApproverId;
                 report.Employee = GetEmployeeByEmpID(rep.EmpId);
@@ -149,7 +149,7 @@ namespace ExpenseReimbursment.DAL
             return repEntity;
         }
 
-        public UserEntity GetUserCredentialsbyUserId(int empId)
+        public UserEntity GetUserCredentialsbyUserId(int? empId)
         {
             var user = new UserEntity(); 
             user.UserId = empId;
@@ -196,6 +196,16 @@ namespace ExpenseReimbursment.DAL
         public void UpdateReportEmployee(ExpenseReportEntity rpt)
         {
             _da.UpdateReportEmployee(rpt);
+        }
+
+        public void DeactivateEmplyee(int? empId)
+        {
+            _da.DeactivateEmployee(empId);
+        }
+
+        public void ResetUserPassword(UserEntity user)
+        {
+            _da.ResetUserPassword(user);
         }
     }
 }

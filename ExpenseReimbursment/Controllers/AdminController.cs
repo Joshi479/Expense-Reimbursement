@@ -11,74 +11,86 @@ namespace ExpenseReimbursment.Controllers
 {
     public class AdminController : Controller
     {
-        DataAccess _da = new DataAccess();
         DbtoEntity _de = new DbtoEntity();
         // GET: Admin
-        public ActionResult Index(string message = "")
+        public ActionResult Index()
         {
-            return View(message);
+            RegisterViewModel model = (RegisterViewModel)TempData["model"];
+            return View(model);
         }
 
         [HttpGet]
-        [Authorize(Roles = "ADM")]
-        public PartialViewResult RegisterEmployee()
+        public ActionResult RegisterEmployee()
         {
-            RegisterViewModel model = new RegisterViewModel();
-            model.Message = String.Empty;
-            return PartialView("_Register", model);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
-        [Authorize(Roles = "ADM")]
         [ActionName("RegisterEmployee")]
         public ActionResult RegisterEmployee_Post(RegisterViewModel model)
         {
-            string Message = string.Empty;
+            TempData["model"] = model;
+            if (!ModelState.IsValid)
+            {
+                return View("Index", model);
+            }
             try
             {
-                var userId = _de.InsertEmployee(model);
-                Message = "New Employee created with employee Id" + userId.ToString();
+                RegisterViewModel msgModel = new RegisterViewModel();
+                int userId = _de.InsertEmployee(model);
+                var userCreds = _de.GetUserCredentialsbyUserId(userId);
+                msgModel.Message = "New Employee Registered with User Id "+ userId;
+                TempData["model"] = msgModel;
+                SMTPSender.ToAddress = model.Email;
+                SMTPSender.Subject = "Registration successfull.";
+                SMTPSender.MessageBody = "Welcome to GVB Expense Reimbursement tool. You are Sccussfully registered for the reimbursement of your expenses.\n \n Please login into the tool with below credentials.\n\n User Id: " + userCreds.UserId + "\n Password: " + userCreds.Password;
+                SMTPSender.SendEmail();
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                Message = "Error occured while creating employee" + ex.InnerException.Message ;
+                model.Message = "Error occured while creating employee" + ex.InnerException.Message ;
             }
             
-            return RedirectToAction("Index", new { Message });
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        [Authorize(Roles = "ADM")]
         public PartialViewResult EmployeeList()
         {
-            var empList = _da.GetEmployeeList();
+            var empList = _de.GetEmployeeList();
             return PartialView("_EmpList", empList);
-        }
-        
-        [HttpGet]
-        [Authorize(Roles = "ADM")]
-        public PartialViewResult ReportDetails(int reportId)
-        {
-            var report = _da.GetExpenseReportbyReportId(reportId);
-            return PartialView("~/Shared/_ReportDetails.cshtml", report);
         }
 
         [HttpGet]
-        [Authorize(Roles = "ADM")]
         public PartialViewResult EditEmployeeDetails(EmployeeEntity emp)
         {
             return PartialView("_EditEmployeeDetails", emp);
         }
 
         [HttpPost]
-        [Authorize(Roles = "ADM")]
         [ActionName("EditEmployeeDetails")]
         public JsonResult EditEmployeeDetails_Post(EmployeeEntity emp)
         {
             
             return Json(new {emialId = emp.EmailId, Phone = emp.ContactNumber, role = emp.EmpRole.RoleName });
         }
-
+        [HttpPost]
+        public JsonResult DeactivateEmployee(int empId)
+        {
+            string message = string.Empty;
+            try
+            {
+                _de.DeactivateEmplyee(empId);
+                message = "Employee successfully deactivated.";
+                return Json(new { success = true, msg = message });
+            }
+            catch (Exception ex)
+            {
+                message = "Employee deactivation failed due to " + ex.InnerException.Message;
+            }
+            return Json(new { success = false, msg = message });
+        }
 
     }
 }

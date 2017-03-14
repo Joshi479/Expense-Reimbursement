@@ -6,12 +6,12 @@
 {
     <h4>Expense Report.</h4>
     <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.ValidationSummary("", new { id= "errorMessage", @class = "text-danger" })
 
     <div class="form-group">
         @Html.LabelFor(m => m.ReportType, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.ReportType,new SelectList(new List<SelectListItem> { new SelectListItem { Text = "", Value = "" }, new SelectListItem { Text = "", Value = "" }, new SelectListItem { Text = "", Value= "" }, new SelectListItem { Text= "", Value="" } }), "Select Expense Type", new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.ReportType,new List<SelectListItem> { new SelectListItem { Text = "Business Travel", Value = "BTE" }, new SelectListItem { Text = "Conveyance", Value = "CNV" }, new SelectListItem { Text = "Medical Bills", Value= "MBE" }, new SelectListItem { Text= "Shift Allowance", Value= "SAE" }, new SelectListItem { Text= "Telecom Charges", Value="TEL" } }, "Select Expense Type", new { @class = "form-control" })
         </div>
     </div>
 
@@ -36,6 +36,18 @@
         </div>
     </div>
 }
+
+
+@*<div id="errorMessage">
+    @if (Model != null && Model.Message != null)
+    {
+        <label class="text-danger">
+            @Model.Message
+        </label>
+    }
+</div>*@
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

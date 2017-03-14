@@ -17,6 +17,7 @@
           <Property Name="EmailID" Type="varchar" MaxLength="70" Nullable="false" />
           <Property Name="ContactNum" Type="varchar" MaxLength="20" />
           <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="EmpStatus" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Emp_Roles">
           <Key>
@@ -115,6 +116,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteExpenseReport_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReportId" Type="int" Mode="In" />
+        </Function>
         <Function Name="getUserPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserId" Type="int" Mode="In" />
         </Function>
@@ -126,6 +133,7 @@
           <Parameter Name="EmailId" Type="varchar" Mode="In" />
           <Parameter Name="ContactNum" Type="varchar" Mode="In" />
           <Parameter Name="Gender" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="InOut" />
         </Function>
         <Function Name="InsertExpenseReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ExpId" Type="varchar" Mode="In" />
@@ -209,6 +217,7 @@
           <NavigationProperty Name="ExpenseReportApprover" Relationship="Self.FK__Expense_R__Appro__1DE57479" FromRole="Emp_Details" ToRole="Expense_Reports" />
           <NavigationProperty Name="ExpenseReport" Relationship="Self.FK__Expense_R__EmpId__1CF15040" FromRole="Emp_Details" ToRole="Expense_Reports" />
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EmpStatus" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -341,6 +350,7 @@
             <Parameter Name="EmailId" Mode="In" Type="String" />
             <Parameter Name="ContactNum" Mode="In" Type="String" />
             <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertExpenseReport">
             <Parameter Name="ExpId" Mode="In" Type="String" />
@@ -379,7 +389,13 @@
             <Parameter Name="output" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getUserPassword" ReturnType="Collection(String)">
-            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteEmployee">
+          <Parameter Name="EmpId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteExpenseReport_Employee">
+          <Parameter Name="ReportId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="User">
@@ -398,6 +414,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="Model.Employee">
               <MappingFragment StoreEntitySet="Emp_Details">
+                <ScalarProperty Name="EmpStatus" ColumnName="EmpStatus" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -458,6 +475,8 @@
           <FunctionImportMapping FunctionImportName="UpdateUsers" FunctionName="Model.Store.UpdateUsers" />
           <FunctionImportMapping FunctionImportName="uspRandChars" FunctionName="Model.Store.uspRandChars" />
           <FunctionImportMapping FunctionImportName="getUserPassword" FunctionName="Model.Store.getUserPassword" />
+          <FunctionImportMapping FunctionImportName="DeleteEmployee" FunctionName="Model.Store.DeleteEmployee" />
+          <FunctionImportMapping FunctionImportName="DeleteExpenseReport_Employee" FunctionName="Model.Store.DeleteExpenseReport_Employee" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

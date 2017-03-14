@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using ExpenseReimbursment.Models.Entities;
 using ExpenseReimbursment.Models.EntityFramework;
+using System.Data.Entity.Core.Objects;
 
 namespace ExpenseReimbursment.DAL
 {
@@ -17,7 +18,7 @@ namespace ExpenseReimbursment.DAL
 
         public List<Employee> GetEmployeeList()
         {
-           return _expcontext.Employees.ToList();
+           return _expcontext.Employees.Where(e => e.EmpStatus.Equals("Active")).ToList();
         }
 
         public Role GetRoleByRoleCode(string roleCode)
@@ -54,14 +55,16 @@ namespace ExpenseReimbursment.DAL
             return _expcontext.ExpenseTypes.Where(exp => exp.ExpenseCode.Equals(expCode)).FirstOrDefault();
         }
 
-        public string GetUserPasswordbyUserId(int userId)
+        public string GetUserPasswordbyUserId(int? userId)
         {
             return _expcontext.getUserPassword(userId).FirstOrDefault().ToString();
         }
 
         public int InsertEmployee(EmployeeEntity emp)
         {
-           return _expcontext.InsertEmployee(emp.FirstName, emp.MiddleName, emp.Lastname, emp.RoleId, emp.EmailId, emp.ContactNumber, emp.Gender);
+            ObjectParameter userId = new ObjectParameter("UserId", typeof(int));
+            _expcontext.InsertEmployee(emp.FirstName, emp.MiddleName, emp.Lastname, emp.RoleId, emp.EmailId, emp.ContactNumber, emp.Gender, userId);
+            return Convert.ToInt32(userId.Value);
         }
 
         public void UpdateEmployee(EmployeeEntity emp)
@@ -82,6 +85,16 @@ namespace ExpenseReimbursment.DAL
         public void UpdateReportEmployee(ExpenseReportEntity rpt)
         {
             _expcontext.UpdateExpenseReport_Employee(rpt.ReportId, rpt.ExpenseAmt, rpt.Comments);
+        }
+
+        public void DeactivateEmployee(int? empId)
+        {
+            _expcontext.DeleteEmployee(empId);
+        }
+
+        public void ResetUserPassword(UserEntity user)
+        {
+            _expcontext.UpdateUsers(user.UserId, user.Password);
         }
     }
 }

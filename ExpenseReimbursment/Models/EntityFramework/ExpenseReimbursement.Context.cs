@@ -33,7 +33,7 @@ namespace ExpenseReimbursment.Models.EntityFramework
         public virtual DbSet<ExpenseReport> ExpenseReports { get; set; }
         public virtual DbSet<User> Users { get; set; }
     
-        public virtual int InsertEmployee(string firstName, string middleName, string lastName, string roleId, string emailId, string contactNum, string gender)
+        public virtual int InsertEmployee(string firstName, string middleName, string lastName, string roleId, string emailId, string contactNum, string gender, ObjectParameter userId)
         {
             var firstNameParameter = firstName != null ?
                 new ObjectParameter("FirstName", firstName) :
@@ -63,7 +63,7 @@ namespace ExpenseReimbursment.Models.EntityFramework
                 new ObjectParameter("Gender", gender) :
                 new ObjectParameter("Gender", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertEmployee", firstNameParameter, middleNameParameter, lastNameParameter, roleIdParameter, emailIdParameter, contactNumParameter, genderParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertEmployee", firstNameParameter, middleNameParameter, lastNameParameter, roleIdParameter, emailIdParameter, contactNumParameter, genderParameter, userId);
         }
     
         public virtual int InsertExpenseReport(string expId, Nullable<int> empId, Nullable<decimal> expenseAmt, string comments, string status)
@@ -195,6 +195,24 @@ namespace ExpenseReimbursment.Models.EntityFramework
                 new ObjectParameter("UserId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("getUserPassword", userIdParameter);
+        }
+    
+        public virtual int DeleteEmployee(Nullable<int> empId)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteEmployee", empIdParameter);
+        }
+    
+        public virtual int DeleteExpenseReport_Employee(Nullable<int> reportId)
+        {
+            var reportIdParameter = reportId.HasValue ?
+                new ObjectParameter("ReportId", reportId) :
+                new ObjectParameter("ReportId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteExpenseReport_Employee", reportIdParameter);
         }
     }
 }

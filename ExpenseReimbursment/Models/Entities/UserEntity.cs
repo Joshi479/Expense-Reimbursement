@@ -9,7 +9,7 @@ namespace ExpenseReimbursment.Models.Entities
 {
     public class UserEntity
     {
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string Password { get; set; }
  
     }

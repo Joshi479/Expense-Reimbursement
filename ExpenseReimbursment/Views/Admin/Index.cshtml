@@ -1,4 +1,4 @@
-﻿@model string
+﻿@model ExpenseReimbursment.Models.RegisterViewModel
 @{
     ViewBag.Title = "GVB Administration";
 }
@@ -15,12 +15,11 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Register Employee", "RegisterEmployee", "Admin")</li>
-                <li>@Html.ActionLink("Employee List", "EmployeeList", "Admin")</li>
-                <li>@Html.ActionLink("View Reports", "GetReportList", "Employee")</li>
+                <li><a id="empList" href="#">Employee List</a></li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             </ul>
-            @Html.Partial("_LoginPartial")
+            @Html.Partial("_LoginPartial", "Admin")
         </div>
     </div>
 </div>
@@ -29,5 +28,14 @@
 </div>
 
 <div id="adminBody" class="container">
+    @Html.Partial("~/Views/Admin/_Register.cshtml", Model)
+</div>
 
+<div id="errorMessage">
+@if (Model != null && Model.Message != null)
+{
+    <label class="text-danger">
+        @Model.Message 
+    </label>
+}    
 </div>

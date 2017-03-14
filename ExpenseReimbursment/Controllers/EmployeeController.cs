@@ -11,32 +11,56 @@ namespace ExpenseReimbursment.Controllers
 {
     public class EmployeeController : Controller
     {
-        DataAccess _da = new DataAccess();
         DbtoEntity _de = new DbtoEntity();
         // GET: Employee
         public ActionResult Index()
         {
-            return View();
+            ReportViewModel model;
+            var empEntity = _de.GetEmployeeByEmpID(Convert.ToInt32(Session["userId"]));
+            if (TempData["model"] == null )
+            {                
+                model = new ReportViewModel();  
+            }
+            else
+                model = (ReportViewModel)TempData["model"];
+            
+                model.EmpId = Convert.ToInt32(Session["userId"]);
+                model.Name = empEntity.FirstName + " " + empEntity.Lastname;
+                model.RoleId = empEntity.RoleId;                            
+            return View(model);
         }
         [HttpGet]
         public PartialViewResult EmployeeDetails(int? empId)
         {
             var emp = _de.GetEmployeeByEmpID(empId); 
-            return PartialView("~/Shared/_EmployeeDetails.cshtml", empId);
-        }
-        [HttpGet]
-        public PartialViewResult GenerateExpenseReport()
-        {
-            ReportViewModel report = new ReportViewModel();
-            return PartialView("_GenerateReport", report);
+            return PartialView("_EmployeeDetails", emp);
         }
 
         [HttpPost]
         [ActionName("GenerateExpenseReport")]
         public ActionResult GenerateExpenseReport_Post(ReportViewModel expRpt)
         {
-            _de.InsertReport(expRpt);
-            return RedirectToAction("GetReportList", new { empId = expRpt.EmpId });
+            TempData["model"] = expRpt;
+            if (!ModelState.IsValid)
+            {
+                expRpt.Message = "The Data you entered is not valid data. Please try again.";
+                return RedirectToAction("Index", expRpt);
+            }
+            try
+            {
+                ReportViewModel msgModel = new ReportViewModel();
+                expRpt.EmpId = Convert.ToInt32(Session["userId"]);
+               _de.InsertReport(expRpt);                
+                msgModel.Message = "Report successfully generated";
+                TempData["model"] = msgModel;
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                expRpt.Message = "Error occured while Generating Report" + ex.InnerException.Message;
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

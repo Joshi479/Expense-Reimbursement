@@ -1,4 +1,4 @@
-﻿@model ExpenseReimbursment.Models.Entities.EmployeeEntity
+﻿@model ExpenseReimbursment.Models.ReportViewModel
 @{
     ViewBag.Title = "GVB Expense Reimbursement";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,26 +16,25 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("View Profile", "EmployeeDetails", "Employee")</li>
-                <li>@Html.ActionLink("Generate Report", "GenerateExpenseReport", "Employee")</li>
-                <li>
+                <li>@Html.ActionLink("Generate Report", "Index", "Employee")</li>
+                <li class="dropdown">
                     @if (Model.RoleId.Equals("EMP"))
                     {
-                        @Html.ActionLink("View My Reports", "GetReportList", "Employee", new { Model.EmpId })
+                        <a href="javascript:;" onclick="getReportList(@Model.EmpId);">View My Reports</a>
                     }
                     else
-                    {
-                        <label>Reports</label>
-                            <ul>
-                                <li>@Html.ActionLink("View My Reports", "GetReportList", "Employee", new { Model.EmpId })</li>
-                                <li>@Html.ActionLink("View Employees Reports", "GetReportListApproval", "Employee", new { Model.EmpId })</li>
+                    {                    
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a id="reportList" href="javascript:;" onclick="getReportList(@Model.EmpId);">View My Reports</a></li>
+                                <li><a id="reportListApp" href="javascript:;" onclick="getReportListApproval('@Model.RoleId');">View Employees Reports</a></li>                                
                             </ul>
                     }                    
                 </li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             </ul>
-            @Html.Partial("_LoginPartial")
+            @Html.Partial("_LoginPartial", "Hello " + Model.Name + " !")
         </div>
     </div>
 </div>
@@ -44,6 +43,10 @@
 </div>
 
 <div id="employeeBody" class="container">
-    
+    @Html.Partial("~/Views/Employee/_GenerateReport.cshtml")
 </div>
+
+
+
+
 

@@ -25,10 +25,19 @@ namespace ExpenseReimbursment
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Scripts/DataTables/datatables.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/mainJS").Include(
                       "~/Scripts/ApplicationJS/gvbexpense.js"));
+            bundles.Add(new ScriptBundle("~/bundles/adminJS").Include(
+                      "~/Scripts/ApplicationJS/adminJS.js"));
+            bundles.Add(new ScriptBundle("~/bundles/empJS").Include(
+                      "~/Scripts/ApplicationJS/empJS.js"));
+            bundles.Add(new ScriptBundle("~/bundles/homeJS").Include(
+                      "~/Scripts/ApplicationJS/disableBack.js"));
+            bundles.Add(new ScriptBundle("~/bundles/dataTable").Include(
+                      "~/Scripts/DataTables/datatables.js"));
         }
     }
 }
