@@ -36,6 +36,20 @@ namespace ExpenseReimbursment.Controllers
             return PartialView("_EmployeeDetails", emp);
         }
 
+        [HttpGet]
+        public PartialViewResult EditEmployeeDetails(EmployeeEntity emp)
+        {
+            return PartialView("_EditEmployeeDetails", emp);
+        }
+
+        [HttpPost]
+        [ActionName("EditEmployeeDetails")]
+        public JsonResult EditEmployeeDetails_Post(EmployeeEntity emp)
+        {
+
+            return Json(new { emialId = emp.EmailId, Phone = emp.ContactNumber, role = emp.EmpRole.RoleName });
+        }
+
         [HttpPost]
         [ActionName("GenerateExpenseReport")]
         public ActionResult GenerateExpenseReport_Post(ReportViewModel expRpt)

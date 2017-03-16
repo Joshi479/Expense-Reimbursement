@@ -55,9 +55,19 @@ namespace ExpenseReimbursment.Controllers
                 _user.Password = model.Password;
                 if (_authUser.AuthenticateUser(_user))
                 {
-                    FormsAuthentication.SetAuthCookie(_user.UserId.ToString(), model.RememberMe);
-                    Session["userId"] = _user.UserId;
-                    return Json(new { success = true });
+                    var role = _authUser.GetUserRole(_user.UserId).RoleCode;
+                    if (!role.Equals("ADM"))
+                        role = "EMP";
+                    if (role.Equals(model.Role))
+                    {
+                        FormsAuthentication.SetAuthCookie(_user.UserId.ToString(), model.RememberMe);
+                        Session["userId"] = _user.UserId;
+                        return Json(new { success = true });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, responseText = "Unauthorized Login. Are you trying to login as another role? Please try again" });
+                    }
                 }
                 message = "Password does not match the user password! Please try again.";
                 return Json(new { success = false, responseText = message });
@@ -86,10 +96,11 @@ namespace ExpenseReimbursment.Controllers
 
         //
         // GET: /Account/ForgotPassword
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
-            return View();
+            return PartialView("_ForgotPassword");
         }
 
         //
@@ -97,28 +108,33 @@ namespace ExpenseReimbursment.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword(ForgotPasswordViewModel model)
+        [ActionName("ForgotPassword")]
+        public ActionResult ForgotPassword_Post(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
-                
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                
-
+                string error = string.Empty;
+                ModelState.Values.SelectMany(v => v.Errors).ToList().ForEach(e => error += e.ErrorMessage + "\n");
+                return Json(new { success = false, message = error });
+            }
+            var employee = _de.GetEmployeeByEmpID(model.EmpId);
+            if (employee != null && employee.EmpId.Equals(model.Email))
+            {
+                try
+                {
+                    string password = _de.ForgotPassword(model.EmpId);
+                    SMTPSender.ToAddress = model.Email;
+                    SMTPSender.Subject = "New Password for Employee.";
+                    SMTPSender.MessageBody = "Your new password is given below. Please login with this password and reset to your own password.\n\n\n Passwor: " + password;
+                    SMTPSender.SendEmail();
+                    return Json(new { success = true, msg = "New password is generated and emai is sent to the employee." });
+                }
+                catch (Exception ex) {
+                    return Json(new { success = false, msg = ex.InnerException.Message });
+                }
                 
             }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Account/ForgotPasswordConfirmation
-        [AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
-        {
-            return View();
+            return Json(new { success = false, msg = "The employee id or email address is not found. Please try again with valid details." });
         }
 
         //
@@ -148,8 +164,9 @@ namespace ExpenseReimbursment.Controllers
                 UserEntity user = new UserEntity();
                 user.UserId = Convert.ToInt32(Session["userId"]);
                 user.Password = model.Password;
+                var role = _authUser.GetUserRole(user.UserId);
                 _de.ResetUserPassword(user);
-                return Json(new { success = true, message = "Password successfully reset. Please login with new password." });
+                return Json(new { success = true, role = role.RoleCode, message = "Password successfully reset. Please login with new password." });
             }
             catch (Exception ex)
             {

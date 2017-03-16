@@ -96,5 +96,11 @@ namespace ExpenseReimbursment.DAL
         {
             _expcontext.UpdateUsers(user.UserId, user.Password);
         }
+        public string ForgotPassword(int? userId)
+        {
+            ObjectParameter password = new ObjectParameter("Userpassword", typeof(string));
+            _expcontext.updateForgotPassword(userId, password);
+            return password.Value.ToString();
+        }
     }
 }

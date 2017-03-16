@@ -144,7 +144,6 @@
         </Function>
         <Function Name="UpdateEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
-          <Parameter Name="RoleId" Type="varchar" Mode="In" />
           <Parameter Name="EmailId" Type="varchar" Mode="In" />
           <Parameter Name="ContactNum" Type="varchar" Mode="In" />
         </Function>
@@ -159,6 +158,10 @@
           <Parameter Name="ReportId" Type="int" Mode="In" />
           <Parameter Name="ExpenseAmt" Type="money" Mode="In" />
           <Parameter Name="Comments" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="updateForgotPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="UpdateUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EmpId" Type="int" Mode="In" />
@@ -361,7 +364,6 @@
           </FunctionImport>
           <FunctionImport Name="UpdateEmployee">
             <Parameter Name="EmpId" Mode="In" Type="Int32" />
-            <Parameter Name="RoleId" Mode="In" Type="String" />
             <Parameter Name="EmailId" Mode="In" Type="String" />
             <Parameter Name="ContactNum" Mode="In" Type="String" />
           </FunctionImport>
@@ -396,6 +398,10 @@
           </FunctionImport>
           <FunctionImport Name="DeleteExpenseReport_Employee">
           <Parameter Name="ReportId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="updateForgotPassword">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="password" Mode="InOut" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="User">
@@ -477,6 +483,7 @@
           <FunctionImportMapping FunctionImportName="getUserPassword" FunctionName="Model.Store.getUserPassword" />
           <FunctionImportMapping FunctionImportName="DeleteEmployee" FunctionName="Model.Store.DeleteEmployee" />
           <FunctionImportMapping FunctionImportName="DeleteExpenseReport_Employee" FunctionName="Model.Store.DeleteExpenseReport_Employee" />
+          <FunctionImportMapping FunctionImportName="updateForgotPassword" FunctionName="Model.Store.updateForgotPassword" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

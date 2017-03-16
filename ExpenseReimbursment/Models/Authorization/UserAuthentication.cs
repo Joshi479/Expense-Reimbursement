@@ -24,7 +24,7 @@ namespace ExpenseReimbursment.Models.Authorization
                 return true;
             return false;
         }
-        public EmpRole GetUserRole(int empId)
+        public EmpRole GetUserRole(int? empId)
         {
             return _de.GetEmployeeByEmpID(empId).EmpRole;
         }

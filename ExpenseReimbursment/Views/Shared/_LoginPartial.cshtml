@@ -10,7 +10,7 @@
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Model<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="javascript:EmployeeDetails(@userId);">View Profile</a></li>
+                    <li><a href="javascript:EmployeeDetails(@userId,true);">View Profile</a></li>
                     <li>@Html.ActionLink("Reset Password", "ResetPassword", "Account", null, new { id = "resetPword" })</li>
                 </ul>
             </li>

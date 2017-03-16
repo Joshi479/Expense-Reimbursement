@@ -207,5 +207,10 @@ namespace ExpenseReimbursment.DAL
         {
             _da.ResetUserPassword(user);
         }
+
+        public string ForgotPassword(int? userId)
+        {
+            return _da.ForgotPassword(userId);
+        }
     }
 }

@@ -59,6 +59,7 @@ namespace ExpenseReimbursment.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+        public string Role { get; set; }
     }
 
     public class RegisterViewModel
@@ -108,6 +109,9 @@ namespace ExpenseReimbursment.Models
 
     public class ForgotPasswordViewModel
     {
+        [Required]
+        [Display(Name = "Employee Id")]
+        public int? EmpId { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

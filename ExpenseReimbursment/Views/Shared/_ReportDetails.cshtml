@@ -1,91 +1,51 @@
 ﻿
-@using ExpenseReimbursment.Models.Entities
-@model ExpenseReport
+@model ExpenseReimbursment.Models.Entities.ExpenseReportEntity
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-2">
-            Report Id
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.ReportId)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2">
-            Report Type
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.ExpType.ExpName)
+
+@using (Html.BeginForm("GenerateExpenseReport", "Employee", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <h4>Expense Report.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { id = "errorMessage", @class = "text-danger" })
+    <div class="form-group">
+        <label class="col-md-2 control-label">Report Id</label>
+        <div class="col-md-10">
+            <label class="form-control">@Model.ReportId</label>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-2">
-            Expense Amount
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.ExpenseAmt)
+    <div class="form-group">
+        <label class="col-md-2 control-label">Report Type</label>
+        <div class="col-md-10">
+            <label class="form-control">@Model.ExpType.ExpName</label>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-2">
-            Applied by
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.EmpId)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2">
-            Applied Date
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.AppliedDate)
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Expense Amount</label>
+        <div class="col-md-10">
+            <label class="form-control">@Model.ExpenseAmt</label>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-2">
-            Approver Id
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.ApproverId)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2">
-            Status
-        </div>
-        <div class="col-lg-2">
-            @Html.LabelFor(m => Model.Status)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Comments, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Comments, new { @class = "form-control" })
         </div>
     </div>
-    @if (Model.Status.ToLower() == "approved")
-    {
-        <div class="row">
-            <div class="col-lg-2">
-                Approved Date
-            </div>
-            <div class="col-lg-2">
-                @Html.LabelFor(m => Model.ApprovedDate)
-            </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Generate" />
         </div>
-        <div class="row">
-            <div class="col-lg-2">
-                Approved Amount
-            </div>
-            <div class="col-lg-2">
-                @Html.LabelFor(m => Model.ApprovedAmt)
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-2">
-                Comments
-            </div>
-            <div class="col-lg-2">
-                <p>@Model.Comments</p>
-            </div>
-        </div>
-    }
-</div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 

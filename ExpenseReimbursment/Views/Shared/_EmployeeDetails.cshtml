@@ -36,22 +36,15 @@
                 <label class="form-control">@Model.EmpRole.RoleName</label>
             </div>
         </div>
-        @if (!Model.RoleId.Equals("ADM"))
-        {
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input id="btnLogin" type="button" value="Edit Details" class="btn btn-default" />
-                </div>
+        <div id="divEdit" class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnEdit" type="button" value="Edit Details" class="btn btn-default" />
             </div>
-        }
-        else
-        {
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input id="btnLogin" type="button" value="back to list" class="btn-link" />
-                </div>
+        </div>
+        <div id="divBacktoList" class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnBacktolist" type="button" value="back to list" class="btn-link" onclick="backToEmpList()" />
             </div>
-        }
-
+        </div>
     </div>
 </div>

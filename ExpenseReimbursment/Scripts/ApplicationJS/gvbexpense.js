@@ -67,6 +67,66 @@ $("#resetPword").click(function (sender) {
     });
 });
 
+// grt forgot password
+
+function ForgotPassword() {
+    $.ajax({
+        type: "GET",
+        url: "/Account/ForgotPassword",
+        datatype: "html",
+        success: function (data) {
+            if ($("#empDiv").css("display") === "none") {
+                $("#admLoginDiv").html(data);
+            }
+            else {
+                $("#empLoginDiv").html(data);
+            }            
+        },
+        error: function (data) {
+            if ($("#empDiv").css("display") === "none") {
+                $("#admLoginDiv").html('<h1>Error Occured. Please check the connection.</h1>');
+            }
+            else {
+                $("#empLoginDiv").html('<h1>Error Occured. Please check the connection.</h1>');
+            }            
+        }
+    });
+}
+
+function ForgotPasswordPost()
+{
+    var token = $("#formForgotPwrd input").val();
+    var pwrdJson = {
+        __RequestVerificationToken: token,
+        EmpId: $("#EmpId").val(),
+        Email: $("#Email").val()
+    }
+    $.ajax({
+        type: "post",
+        url: "/Account/UserValidate",
+        data: pwrdJson,
+        datatype: "text",
+        success: function (data) {
+            alert(data.msg)
+            if (data.success) {
+                $("#formForgotPwrd").attr('validated', true);
+                $("#formForgotPwrd").submit();
+            }
+            else {
+                $("#errorMsg").html('<p class="text-danger">' + data.responseText + '<p>');
+            }
+        },
+        error: function (data) {
+            if ($("#empDiv").css("display") === "none") {
+                $("#admLoginDiv").html('<h1>Error Occured. Please check the connection.</h1>');
+            }
+            else {
+                $("#empLoginDiv").html('<h1>Error Occured. Please check the connection.</h1>');
+            }
+        }
+    });
+}
+
 //get employee reports
 function getReportList(Id) {
     var empJson = { empId: Id }
@@ -103,8 +163,9 @@ function getReportListApproval(empRole) {
     });
 }
 //get empl details
-function EmployeeDetails(Id) {
-    var empJson = { empId: Id }
+function EmployeeDetails(Id, isOwn) {
+    var empJson = { empId: Id };
+    var isOwnEmp = isOwn;
     $.ajax({
         type: "GET",
         url: "/Employee/EmployeeDetails",
@@ -113,6 +174,12 @@ function EmployeeDetails(Id) {
         success: function (data) {
             $("#adminBody").html(data);
             $("#employeeBody").html(data);
+            if (isOwnEmp) {
+                $("#divBacktoList").hide();
+            }
+            else {
+                $("#divEdit").hide();
+            }
         },
         error: function () {
             $("#adminBody").html('<h1>Error Occured. Please check the connection.</h1>');
@@ -123,12 +190,19 @@ function EmployeeDetails(Id) {
 
 //user login
 function login() {
-    var token = $("#__AjaxAntiForgeryForm input").val();
+    var token = $("#formLogin input").val();
+    var role;
+    if ($("#empDiv").css("display") == "none") {
+        role = "ADM";
+    }
+    else
+        role = "EMP";
     var model = {
         __RequestVerificationToken: token,
         UserId: $("#UserId").val(),
         Password: $("#Password").val(),
-        RememberMe: $("#RememberMe").val()
+        RememberMe: $("#RememberMe").val(),
+        Role: role
     }
     $.ajax({
         type: "post",
@@ -137,17 +211,42 @@ function login() {
         datatype: "text",
         success: function (data) {
             if (data.success) {
-                $("#__AjaxAntiForgeryForm").attr('validated', true);
-                $("#__AjaxAntiForgeryForm").submit();
+                $("#formLogin").attr('validated', true);
+                $("#formLogin").submit();
             }
-            else
-            {
-                $("#errorMsg").html('<p class="text-danger">' + data.responseText + '<p>');
+            else {
+                $("#errorMsg").html('<p class="text-danger">'+data.responseText+'</p>' );
             }
-            
         },
         error: function (data) {
-            $("#errorMsg").html('<h1>Error Occured. Please check the connection.</h1>')
+            $("#errorMsg").html('<h1>Error Occured. Please check the connection.</h1>');
+        }
+    });
+}
+
+//reset password post
+function ResetPasswordPost() {
+    var token = $("#formResetPwrd input").val();
+    var model = {
+        __RequestVerificationToken: token,
+        Password: $("#txtPaswword").val(),
+        ConfirmPassword: $("#txtConfirmPwrd").val()
+    }
+    $.ajax({
+        type: "post",
+        url: "/Account/ResetPassword",
+        data: model,
+        datatype: "text",
+        success: function (data) {
+            alert(data.message);
+            if (data.success) {                
+                $("#logoutForm").attr('validated', true);
+                $("#logoutForm").submit();
+            }
+        },
+        error: function (data) {
+            $("#adminBody").html('<h1>Error Occured. Please check the connection.</h1>');
+            $("#employeeBody").html('<h1>Error Occured. Please check the connection.</h1>');
         }
     });
 }
@@ -173,6 +272,11 @@ function EmpDeactivate(Id) {
             $("#errorMessage").html('<h1>Error Occured. Please check the connection.</h1>')
         }
     });
+}
+
+function backToEmpList()
+{
+    $("#empList").trigger('click');
 }
 
 

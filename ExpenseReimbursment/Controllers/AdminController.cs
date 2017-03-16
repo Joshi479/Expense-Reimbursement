@@ -60,21 +60,9 @@ namespace ExpenseReimbursment.Controllers
         {
             var empList = _de.GetEmployeeList();
             return PartialView("_EmpList", empList);
-        }
+        }      
 
-        [HttpGet]
-        public PartialViewResult EditEmployeeDetails(EmployeeEntity emp)
-        {
-            return PartialView("_EditEmployeeDetails", emp);
-        }
-
-        [HttpPost]
-        [ActionName("EditEmployeeDetails")]
-        public JsonResult EditEmployeeDetails_Post(EmployeeEntity emp)
-        {
-            
-            return Json(new {emialId = emp.EmailId, Phone = emp.ContactNumber, role = emp.EmpRole.RoleName });
-        }
+        
         [HttpPost]
         public JsonResult DeactivateEmployee(int empId)
         {

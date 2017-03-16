@@ -349,6 +349,7 @@
     <Content Include="Views\Employee\_UpdateReport.cshtml" />
     <Content Include="Views\Shared\_ApproveReport.cshtml" />
     <Content Include="Views\Account\_ResetPassword.cshtml" />
+    <Content Include="Views\Account\_ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -91,15 +91,11 @@ namespace ExpenseReimbursment.Models.EntityFramework
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertExpenseReport", expIdParameter, empIdParameter, expenseAmtParameter, commentsParameter, statusParameter);
         }
     
-        public virtual int UpdateEmployee(Nullable<int> empId, string roleId, string emailId, string contactNum)
+        public virtual int UpdateEmployee(Nullable<int> empId, string emailId, string contactNum)
         {
             var empIdParameter = empId.HasValue ?
                 new ObjectParameter("EmpId", empId) :
                 new ObjectParameter("EmpId", typeof(int));
-    
-            var roleIdParameter = roleId != null ?
-                new ObjectParameter("RoleId", roleId) :
-                new ObjectParameter("RoleId", typeof(string));
     
             var emailIdParameter = emailId != null ?
                 new ObjectParameter("EmailId", emailId) :
@@ -109,7 +105,7 @@ namespace ExpenseReimbursment.Models.EntityFramework
                 new ObjectParameter("ContactNum", contactNum) :
                 new ObjectParameter("ContactNum", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateEmployee", empIdParameter, roleIdParameter, emailIdParameter, contactNumParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateEmployee", empIdParameter, emailIdParameter, contactNumParameter);
         }
     
         public virtual int UpdateExpenseReport_Approver(Nullable<int> reportId, Nullable<int> approverId, Nullable<decimal> approvedAmt, string comments, string status)
@@ -213,6 +209,15 @@ namespace ExpenseReimbursment.Models.EntityFramework
                 new ObjectParameter("ReportId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteExpenseReport_Employee", reportIdParameter);
+        }
+    
+        public virtual int updateForgotPassword(Nullable<int> userId, ObjectParameter password)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateForgotPassword", userIdParameter, password);
         }
     }
 }

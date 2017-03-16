@@ -6,11 +6,13 @@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "__AjaxAntiForgeryForm" , @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "formLogin" , @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 <hr/>
-                @Html.ValidationSummary(true,"Invalid Login Credentials!", new { @class = "text-danger" })
+                <div id="errorMsg" class="row content-centre">
+                    
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.UserId, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
@@ -38,10 +40,11 @@
                         <input id="btnLogin" type="button" value="Log in" class="btn btn-default" onclick="login()" />
                     </div>
                 </div>               
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+                 <div class="form-control-static">
+                     <div class="col-md-offset-2 col-md-10">
+                         <input type="button" id="forgotPwrd" class="btn-link" value="Forgot your password?" onclick="ForgotPassword()" />
+                     </div>
+                 </div>                    
             }
         </section>
     </div>
