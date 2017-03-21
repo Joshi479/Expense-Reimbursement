@@ -341,7 +341,7 @@
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\_GenerateReport.cshtml" />
     <Content Include="Views\Employee\_ViewReports.cshtml" />
-    <Content Include="Views\Shared\_ReportDetails.cshtml" />
+    <Content Include="Views\Employee\_ReportDetails.cshtml" />
     <Content Include="Views\Admin\_EmpList.cshtml" />
     <Content Include="Views\Shared\_ReportList.cshtml" />
     <Content Include="Views\Shared\_EmployeeDetails.cshtml" />

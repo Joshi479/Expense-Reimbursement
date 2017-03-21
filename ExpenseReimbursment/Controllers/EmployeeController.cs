@@ -46,8 +46,19 @@ namespace ExpenseReimbursment.Controllers
         [ActionName("EditEmployeeDetails")]
         public JsonResult EditEmployeeDetails_Post(EmployeeEntity emp)
         {
-
-            return Json(new { emialId = emp.EmailId, Phone = emp.ContactNumber, role = emp.EmpRole.RoleName });
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, msg = "Please enter valid details." });
+            }
+            try {
+                emp.EmpId = Convert.ToInt32(Session["userId"]);
+                _de.UpdateEmployee(emp);
+                return Json(new { success = true, msg = "Employee Details updated successfully.", Id = emp.EmpId });
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, msg = "Error occured while updating employee." + ex.Message });
+            }            
         }
 
         [HttpPost]
@@ -91,10 +102,10 @@ namespace ExpenseReimbursment.Controllers
             return PartialView("_ViewReports", reportList);
         }
 
-        [HttpGet]
-        public PartialViewResult ApproveExpenseReport()
+        public PartialViewResult GetReportDetails(int? reportId)
         {
-            return PartialView("~/Shared/_ApproveReport.cshtml");
+            var rpt = _de.GtExpenseReportbyReportId(reportId);
+            return PartialView("_ReportDetails", rpt);
         }
 
         [HttpPost]
@@ -105,19 +116,27 @@ namespace ExpenseReimbursment.Controllers
             return Json(new { status = rpt.Status, amount = rpt.ApprovedAmt, comments = rpt.Comments, date = rpt.ApprovedDate });
         }
 
-        [HttpGet]
-        public PartialViewResult UpdateExpenseReport()
-        {
-            //code to get Textboxes for approving based on reportId
-            return PartialView("~/Employee/_UpdateReport.cshtml");
-        }
-
         [HttpPost]
         [ActionName("UpdateExpenseReport")]
-        public JsonResult UpdateExpenseReport_Post(ExpenseReportEntity rpt)
+        public JsonResult UpdateExpenseReport_Post(ExpenseReportEntity rpt, bool isOwnRpt)
         {
-            _de.UpdateReportEmployee(rpt);
-            return Json(new { amount = rpt.ExpenseAmt, date = rpt.AppliedDate });
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, msg = "Did you enter the right details? Please enter valid details." });
+            }
+            try {
+                if (isOwnRpt)
+                {
+                    _de.UpdateReportEmployee(rpt);
+                }
+                else
+                    _de.UpdateReportApprover(rpt);                
+                return Json(new { success = true, own = isOwnRpt, msg = "Report updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { scuccess = true, msg = "Error Occured. "+ex.Message });
+            }            
         }
     }
 }

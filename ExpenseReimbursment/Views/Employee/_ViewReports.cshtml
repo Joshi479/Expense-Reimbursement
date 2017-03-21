@@ -40,6 +40,9 @@
             <td>
                 Comments
             </td>
+            <td>
+                Action
+            </td>
             </thead>
 
 
@@ -66,7 +69,7 @@
                     </td>
 
                     @if (expReport.Status.ToLower().Equals("approved"))
-                {
+                    {
                         <td>
                             expReport.ApprovedAmt.ToString();
                         </td>
@@ -76,7 +79,7 @@
                         <td>TBD</td>
                     }
                     @if (expReport.Status.ToLower().Equals("approved"))
-                {
+                    {
                         <td>
                             expReport.ApprovedDate;
                         </td>
@@ -86,7 +89,7 @@
                         <td>TBD</td>
                     }
                     @if (expReport.Status.ToLower().Equals("approved"))
-                {
+                    {
                         <td>
                             expReport.ApproverId.ToString();
                         </td>
@@ -96,21 +99,29 @@
                         <td>TBD</td>
                     }
                     <td>
-                        expReport.Comments
+                        @expReport.Comments
                     </td>
                     @if (expReport.Status.ToLower().Equals("approved"))
-                {
-                        <td>
-                            <div class="col-md-11">
-                                <input type="button" class="btn-link" value="Delete" />
-                            </div>
-                        </td>
+                    {
+                        if (expReport.EmpId == Convert.ToInt32(Session["userId"]))
+                        {
+                            <td>
+                                <div class="col-md-11">
+                                    <input type="button" class="btn-link" value="Delete" />
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>No Action</td>
+                        }
+
                     }
                     else
                     {
                         <td>
                             <div class="col-md-11">
-                                <input type="button" class="btn-link" value="Update" />
+                                <input id="btnRptUpdate" type="button" class="btn-link" value="Update" onclick="getReportDetails(@expReport.ReportId)" />
                             </div>
                         </td>
                     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -88,7 +89,7 @@ namespace ExpenseReimbursment.Models.Entities
                 _roleId = value;
             }
         }
-
+        [Required]
         public string EmailId
         {
             get
@@ -101,6 +102,7 @@ namespace ExpenseReimbursment.Models.Entities
             }
         }
 
+        [Required]
         public string ContactNumber
         {
             get

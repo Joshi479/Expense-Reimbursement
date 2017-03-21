@@ -53,6 +53,7 @@ namespace ExpenseReimbursment.DAL
                 {
                     report.Approver = GetEmployeeByEmpID(Convert.ToInt32(rep.ApproverId));
                 }
+                report.EmpId = rep.EmpId;
                 report.ApproverId = Convert.ToInt32(rep.ApproverId);
                 report.Employee = GetEmployeeByEmpID(Convert.ToInt32(rep.EmpId));
                 report.ExpenseAmt = rep.ExpenseAmt;
@@ -60,6 +61,7 @@ namespace ExpenseReimbursment.DAL
                 report.ExpType = GetExpenseTypeByCode(rep.ExpId);
                 report.ReportId = rep.ReportId;
                 report.Status = rep.Status;
+                report.Comments = rep.Comments;
                 reportList.Add(report);
             }
             return reportList;
@@ -129,7 +131,7 @@ namespace ExpenseReimbursment.DAL
             return empRoleEntity;
         }
 
-        public ExpenseReportEntity GtExpenseReportbyReportId(int reportId)
+        public ExpenseReportEntity GtExpenseReportbyReportId(int? reportId)
         {
             var report = _da.GetExpenseReportbyReportId(reportId);
             var repEntity = new ExpenseReportEntity();
@@ -137,9 +139,13 @@ namespace ExpenseReimbursment.DAL
             repEntity.AppliedDate = report.AppliedDate.ToString("MM/dd/yyyy");
             repEntity.EmpId = Convert.ToInt32(report.EmpId);
             repEntity.Employee = GetEmployeeByEmpID(repEntity.EmpId);
-            if (report.ApproverId != Convert.ToInt32(DBNull.Value))
+            if (report.ApproverId != null && report.ApproverId != 0)
+            {
                 repEntity.Approver = GetEmployeeByEmpID(Convert.ToInt32(report.ApproverId));
-            repEntity.ApproverId = Convert.ToInt32(report.ApproverId);
+                repEntity.ApprovedDate = report.ApprovalDate.ToString();
+            }
+                
+            repEntity.ApproverId = report.ApproverId;
             repEntity.ExpenseAmt = report.ExpenseAmt;
             repEntity.ExpTyCode = report.ExpId;
             repEntity.ExpType = GetExpenseTypeByCode(report.ExpId);

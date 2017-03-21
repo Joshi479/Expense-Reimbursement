@@ -49,6 +49,24 @@ $("#empList").click(function () {
     });
 });
 
+$("#btnEdit").click(function () {
+    $("#lblExpenseAmt").hide();
+    $("#txtExpenseAmt").show();
+    $("#lblComments").hide();
+    $("#txtComments").show();
+    $("#beforeEdit").hide();
+    $("#afterEdit").show();
+});
+
+$("#btnApprove").click(function () {
+    $("#lblApprovedAmt").hide();
+    $("#txtApprovedAmt").show();
+    $("#lblComments").hide();
+    $("#txtComments").show();
+    $("#beforeEdit").hide();
+    $("#afterEdit").show();
+});
+
 //get reset password
 $("#resetPword").click(function (sender) {
     sender.preventDefault();
@@ -162,6 +180,91 @@ function getReportListApproval(empRole) {
         }
     });
 }
+
+//get report details
+function getReportDetails(Id) {
+    var rptId = { reportId: Id }
+    $.ajax({
+        type: "GET",
+        url: "/Employee/GetReportDetails",
+        data: rptId,
+        datatype: "html",
+        success: function (data) {
+            $("#employeeBody").html(data);
+            $("#afterEdit").hide();
+            $("#txtExpenseAmt").hide();
+            $("#txtApprovedAmt").hide();
+            $("#txtComments").hide();
+            
+        },
+        error: function () {
+            $("#employeeBody").html('<h1>Error Occured. Please check the connection.</h1>');
+        }
+    });
+}
+
+function EditReport(isOwn) {
+    var ownRpt = isOwn;
+    $("#beforeEdit").hide();
+    $("#afterEdit").show();
+    $("#lblComments").hide();
+    $("#txtComments").show();
+    if (ownRpt) {
+        $("#lblExpenseAmt").hide();
+        $("#txtExpenseAmt").show();
+    }
+    else {
+        $("#lblApprovedAmt").hide();
+        $("#txtApprovedAmt").show();
+    }
+}
+
+function UpdateReport()
+{
+    var model;
+    var status = "Approved";
+    var rptId = $("#lblRptId").text();
+    var approvedAmt = $("#txtApprovedAmt").val();
+    if($("#txtApprovedAmt").val()=="TBD" || $("#txtApprovedAmt").val()=="" ||$("#txtApprovedAmt").val()== null)
+    {
+        approvedAmt = 0;
+        status = "Pending";
+    }
+    if ($("#btnApprove").visible == true) {
+        model = {
+            ApprovedAmt: approvedAmt,
+            Comments: $("#txtComments").val(),
+            ReportId: rptId,
+            Status:status,
+            isOwnRpt: false
+        }
+    }
+    else {
+        model = {
+            ExpenseAmt: $("#txtExpenseAmt").val(),
+            Comments: $("#txtComments").val(),
+            ReportId: rptId,
+            isOwnRpt: true
+        }
+    }
+
+    $.ajax({
+        type: "post",
+        url: "/Employee/UpdateExpenseReport",
+        data: model,
+        datatype: "text",
+        success: function (data) {
+            alert(data.msg)
+            if (data.success) {
+                getReportDetails(rptId);
+            }
+        },
+        error: function (data) {
+            $("#employeeBody").html('<h1>Error Occured. Please check the connection.</h1>');
+        }
+    });
+}
+
 //get empl details
 function EmployeeDetails(Id, isOwn) {
     var empJson = { empId: Id };
@@ -174,6 +277,10 @@ function EmployeeDetails(Id, isOwn) {
         success: function (data) {
             $("#adminBody").html(data);
             $("#employeeBody").html(data);
+            $("#divUpdate").hide();
+            $("#divCancel").hide();
+            $("#txtEmail").hide();
+            $("#txtPhn").hide();
             if (isOwnEmp) {
                 $("#divBacktoList").hide();
             }
@@ -182,6 +289,44 @@ function EmployeeDetails(Id, isOwn) {
             }
         },
         error: function () {
+            $("#adminBody").html('<h1>Error Occured. Please check the connection.</h1>');
+            $("#employeeBody").html('<h1>Error Occured. Please check the connection.</h1>');
+        }
+    });
+}
+
+
+function EditEmployeeDetails() {
+    $("#divBacktoList").hide();
+    $("#divEdit").hide();
+    $("#lblEmail").hide();
+    $("#lblPhn").hide();
+    $("#divUpdate").show();
+    $("#divCancel").show();
+    $("#txtEmail").show();
+    $("#txtPhn").show();
+}
+
+function updateEmployeeDetails() {
+    var model = {
+        EmailId: $("#txtEmail").val(),
+        ContactNumber: $("#txtPhn").val()
+    }
+    $.ajax({
+        type: "post",
+        url: "/Employee/EditEmployeeDetails",
+        data: model,
+        datatype: "text",
+        success: function (data) {
+            alert(data.msg)
+            if (data.success) {
+                EmployeeDetails(data.Id, true);
+            }
+            else {
+                $("#errorMsg").html('<p class="text-danger">' + data.responseText + '<p>');
+            }
+        },
+        error: function (data) {
             $("#adminBody").html('<h1>Error Occured. Please check the connection.</h1>');
             $("#employeeBody").html('<h1>Error Occured. Please check the connection.</h1>');
         }

@@ -21,13 +21,15 @@
         <div class="form-group">
             <label class="control-label col-md-2">E-mail</label>
             <div class="col-md-3">
-                <label class="form-control">@Model.EmailId</label>
+                <label id="lblEmail" class="form-control">@Model.EmailId</label>
+                @Html.TextBoxFor(m => m.EmailId, new { id = "txtEmail", @class="form-control"})
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2">Phone Number</label>
             <div class="col-md-3">
-                <label class="form-control">@Model.ContactNumber</label>
+                <label id="lblPhn" class="form-control">@Model.ContactNumber</label>
+                @Html.TextBoxFor(m => m.ContactNumber, new { id = "txtPhn", @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -38,12 +40,20 @@
         </div>
         <div id="divEdit" class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnEdit" type="button" value="Edit Details" class="btn btn-default" />
+                <input id="btnEdit" type="button" value="Edit Details" class="btn btn-default" onclick="EditEmployeeDetails()" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div id="divUpdate" class="col-md-offset-2 col-md-10">
+                <input id="btnUpdate" type="button" value="Update" class="btn btn-default" onclick="updateEmployeeDetails()" />
+            </div>
+            <div id="divCancel" class="col-md-offset-2 col-md-10">
+                <input id="btnCancel" type="button" value="Cancel" class="btn btn-default" onclick="EmployeeDetails(@Model.EmpId, true)" />
             </div>
         </div>
         <div id="divBacktoList" class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnBacktolist" type="button" value="back to list" class="btn-link" onclick="backToEmpList()" />
+                <input id="btnBacktolist" type="button" value="<< back" class="btn-link" onclick="backToEmpList()" />
             </div>
         </div>
     </div>
