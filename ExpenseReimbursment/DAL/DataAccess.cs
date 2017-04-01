@@ -69,7 +69,7 @@ namespace ExpenseReimbursment.DAL
 
         public void UpdateEmployee(EmployeeEntity emp)
         {
-            _expcontext.UpdateEmployee(emp.EmpId, emp.RoleId, emp.EmailId, emp.ContactNumber);
+            _expcontext.UpdateEmployee(emp.EmpId,emp.EmailId, emp.ContactNumber);
         }
 
         public int InsertReport(ExpenseReportEntity report)
