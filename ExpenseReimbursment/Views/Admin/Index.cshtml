@@ -16,8 +16,8 @@
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Register Employee", "RegisterEmployee", "Admin")</li>
                 <li><a id="empList" href="#">Employee List</a></li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li><a href="javascript:;" onclick="getAbout('adminBody');">About</a></li>
+                <li><a href="javascript:;" onclick="getContact('adminBody');">Contact</a></li>
             </ul>
             @Html.Partial("_LoginPartial", "Admin")
         </div>

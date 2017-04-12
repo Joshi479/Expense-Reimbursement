@@ -99,7 +99,8 @@
                         <td>TBD</td>
                     }
                     <td>
-                        @expReport.Comments
+                        <div style="overflow-y:scroll; height:50px;">@expReport.Comments</div>
+
                     </td>
                     @if (expReport.Status.ToLower().Equals("approved"))
                     {

@@ -85,6 +85,37 @@ $("#resetPword").click(function (sender) {
     });
 });
 
+//About
+
+function getAbout(div) {
+    var myDiv = document.getElementById(div);
+    $.ajax({
+        type: "GET",
+        url: "/Home/About",
+        datatype: "html",
+        success: function (data) {
+            myDiv.innerHTML = data;
+        },
+        error: function () {
+            myDiv.innerHTML = '<h1>Error Occured. Please check the connection.</h1>';
+        }
+    });
+}
+
+function getContact(div) {
+    var myDiv = document.getElementById(div);
+    $.ajax({
+        type: "GET",
+        url: "/Home/Contact",
+        datatype: "html",
+        success: function (data) {
+            myDiv.innerHTML = data;
+        },
+        error: function () {
+            myDiv.innerHTML = '<h1>Error Occured. Please check the connection.</h1>';
+        }
+    });
+}
 // grt forgot password
 
 function ForgotPassword() {
