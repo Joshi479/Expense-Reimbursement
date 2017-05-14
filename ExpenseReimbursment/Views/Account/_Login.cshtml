@@ -2,53 +2,49 @@
 @using ExpenseReimbursment.Models
 @model LoginViewModel
 
-
 <div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "formLogin" , @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <hr/>
-                <div id="errorMsg" class="row content-centre">
-                    
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.UserId, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.UserId, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.UserId, "", new { @class = "text-danger" })
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-2">
+    </div>
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "formLogin", @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <hr align="left" width="50%" />
+                    <div id="errorMsg" class="row content-centre">
+
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserId, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.UserId, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.UserId, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input id="btnLogin" type="button" value="Log in" class="btn btn-default" onclick="login()" />
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>               
-                 <div class="form-control-static">
-                     <div class="col-md-offset-2 col-md-10">
-                         <input type="button" id="forgotPwrd" class="btn-link" value="Forgot your password?" onclick="ForgotPassword()" />
-                     </div>
-                 </div>                    
-            }
-        </section>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="btnLogin" type="button" value="Log in" class="btn btn-default" onclick="login()" />
+                        </div>
+                    </div>
+                    <div class="form-control-static">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="button" id="forgotPwrd" class="btn-link" value="Forgot your password?" onclick="ForgotPassword()" />
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+    
     </div>
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

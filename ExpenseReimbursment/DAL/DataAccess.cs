@@ -21,17 +21,21 @@ namespace ExpenseReimbursment.DAL
            return _expcontext.Employees.Where(e => e.EmpStatus.Equals("Active")).ToList();
         }
 
+        public string GetEmpRolecodebyId(int? empId)
+        {
+            return _expcontext.Employees.Where(e => e.EmpID == empId).FirstOrDefault().RoleID;
+        }
         public Role GetRoleByRoleCode(string roleCode)
         {
             return _expcontext.Roles.Where(r => r.RoleCode.Equals(roleCode)).FirstOrDefault();
         }
-        public List<ExpenseReport> GetExpenseReportsbyApproverRole(string approverRole)
+        public List<ExpenseReport> GetExpenseReportsbyApproverRole(string approverRole, int? empId)
         {
             var reports = new List<ExpenseReport>();
             var expTypes = _expcontext.ExpenseTypes.Where(et => et.Approver_Rcode == approverRole).ToList();
             foreach (var exp in expTypes)
             {
-                 _expcontext.ExpenseReports.Where(rpt => rpt.ExpId == exp.ExpenseCode).ToList().ForEach(e => reports.Add(e));
+                 _expcontext.ExpenseReports.Where(rpt => rpt.ExpId == exp.ExpenseCode && rpt.EmpId != empId && !rpt.Status.ToLower().Equals("approved")).ToList().ForEach(e => reports.Add(e));
             }
             return reports;
         }
@@ -79,12 +83,32 @@ namespace ExpenseReimbursment.DAL
 
         public void UpdateReportApprover(ExpenseReportEntity rpt)
         {
-            _expcontext.UpdateExpenseReport_Approver(rpt.ReportId, rpt.ApproverId, rpt.ApprovedAmt, rpt.Comments, rpt.Status);
+            if (rpt.ApprovedAmt != 0)
+            {
+                var report = _expcontext.ExpenseReports.Where(e => e.ReportId == rpt.ReportId).First();
+                report.ApproverId = rpt.ApproverId;
+                report.ApprovedAmt = rpt.ApprovedAmt;
+                report.Comments = rpt.Comments;
+                report.Status = rpt.Status;
+                _expcontext.SaveChanges();
+            }
+            else
+            {
+                var report = _expcontext.ExpenseReports.Where(e => e.ReportId == rpt.ReportId).First();
+                report.Status = "Pending";
+                report.Comments += ";Approver: " + rpt.Comments;
+                _expcontext.SaveChanges();
+            }
+            
         }
 
         public void UpdateReportEmployee(ExpenseReportEntity rpt)
         {
-            _expcontext.UpdateExpenseReport_Employee(rpt.ReportId, rpt.ExpenseAmt, rpt.Comments);
+            var report = _expcontext.ExpenseReports.Where(e => e.ReportId == rpt.ReportId).First();
+            report.ExpenseAmt = rpt.ExpenseAmt;
+            report.ApprovedAmt = rpt.ApprovedAmt;
+            report.Comments += ";Emplyee: "+rpt.Comments;
+            _expcontext.SaveChanges();
         }
 
         public void DeactivateEmployee(int? empId)

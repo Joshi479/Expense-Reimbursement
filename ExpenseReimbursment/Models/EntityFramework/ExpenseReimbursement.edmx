@@ -248,9 +248,9 @@
           <Property Name="ReportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ExpId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="EmpId" Type="Int32" />
-          <Property Name="ExpenseAmt" Type="Int32" />
+          <Property Name="ExpenseAmt" Type="Decimal" />
           <Property Name="ApproverId" Type="Int32" />
-          <Property Name="ApprovedAmt" Type="Int32" />
+          <Property Name="ApprovedAmt" Type="Decimal" />
           <Property Name="Comments" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EmpApprover" Relationship="Self.FK__Expense_R__Appro__1DE57479" FromRole="Expense_Reports" ToRole="Emp_Details" />
           <NavigationProperty Name="Employee" Relationship="Self.FK__Expense_R__EmpId__1CF15040" FromRole="Expense_Reports" ToRole="Emp_Details" />

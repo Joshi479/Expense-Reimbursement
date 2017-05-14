@@ -1,7 +1,10 @@
 ﻿
+@using ExpenseReimbursment.DAL
 @model ExpenseReimbursment.Models.Entities.ExpenseReportEntity
 @{ 
     var isOwn = Model.EmpId == Convert.ToInt32(Session["userId"]);
+    var da = new DataAccess();
+    var role = da.GetEmpRolecodebyId(Convert.ToInt32(Session["userId"]));
 }
 
 
@@ -26,7 +29,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">Applied By</label>
         <div class="col-md-3">
-            <a href="javascript:EmployeeDetails(@Model.EmpId,false);">@Model.EmpId</a>
+            <a id="empId" href="javascript:EmployeeDetails(@Model.EmpId,false);">@Model.EmpId</a>
         </div>
     </div>
 
@@ -114,17 +117,27 @@
             }
             else
             {
-                <input type="button" id="btnApprove" class="btn btn-default" value="Approve" onclick="EditReport(false)" />
+                <input type="button" id="btnUpdatebefore" class="btn btn-default" value="Approve" onclick="EditReport(false)" />
             }
         </div>
     </div> 
     <div id="afterEdit" class="form-group">
-        <div id="divUpdate" class="col-md-offset-2 col-md-10">
-            <input id="btnUpdate" type="button" value="Update" class="btn btn-default" onclick="UpdateReport(@isOwn)" />
-        </div>
-        <div id="divCancel" class="col-md-offset-2 col-md-10">
-            <input id="btnCancel" type="button" value="Cancel" class="btn btn-default" onclick="EmployeeDetails(@Model.EmpId, true)" />
-        </div>
+        @if (isOwn)
+        {
+            
+            <div id="divCancel" class="col-md-offset-2 col-md-10">
+                <input type="button" id="btnUpdate" class="btn btn-default" value="Edit" onclick="UpdateReport('@Model.Employee.RoleId')" />
+                <input id="btnCancel" type="button" value="Cancel" class="btn btn-default" onclick="backToEmpList()" />
+            </div>
+        }
+        else
+        {
+            <div id="divCancel" class="col-md-offset-2 col-md-10">
+                <input type="button" id="btnUpdate" class="btn btn-default" value="Update" onclick="UpdateReport('@role')" />
+                <input type="button" id="btnApprove" class="btn btn-default" value="Approve" onclick="UpdateReport('@role')" />
+                <input id="btnCancel" type="button" value="Cancel" class="btn btn-default" onclick="backToEmpList()" />
+            </div>
+        }
     </div>
 }
 

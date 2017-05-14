@@ -12,9 +12,10 @@
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" , onblur = "return validate()", id="fName" })
         </div>
-    </div>
+        <label id="fName_Msg" class="col-md-2 control-label text-danger"></label>
+</div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.MiddleName, new { @class = "col-md-2 control-label" })
@@ -59,7 +60,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input id="registerEmp" type="submit" class="btn btn-default" value="Register" />
+            <input id="registerEmp" type="submit" class="btn btn-default" value="Register"  onclick="return validate()"/>
         </div>
     </div>
 }

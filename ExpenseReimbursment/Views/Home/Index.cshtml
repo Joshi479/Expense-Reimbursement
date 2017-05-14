@@ -3,25 +3,70 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>
-        GVB Expense Reimbursement
-    </h1>
-    <p class="lead">A Reimbursement tool for all your expenses</p>
-</div>
+    
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
 
-<div class="login-div" id="loginDiv">
-    <div id="empDiv" class="content-centre">
-       <input id="EmpLogin" type="button" class="btn-link" value="Employee"/>
-        <div id="empLoginDiv" class="container">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="http://timepayment.com/wp-content/uploads/2015/10/Business-Equipment-Furniture-Financing-Leasing-Blog-1200x480.jpg" alt="Chicago" style="width:100%;">
+            </div>
+
+            <div class="item">
+                <img src="http://www.lyfecamp.com/wp-content/uploads/2017/04/OGMQRV0-1200x480.jpg" alt="Chicago" style="width:100%;">
+            </div>
+
+            <div class="item">
+                <img src="https://www.systemation.com/images/good-business-analyst-1200x480.jpg" alt="New york" style="width:100%;">
+            </div>
+        </div>
+        <div class="col-md-12 text-center" style="position: absolute;top: 30%;left: 1.8%;right: auto;width: 96.66666666666666%;color: #fff;background-color: rgba(0, 0, 0, 0.72);
+ padding: 30px;
+        ">
+            <div class="card">
+                <div class="card-block">
+                    <h1 class="card-title">GVB Expense Reimbursement</h1>
+
+                    <p class="card-text">Reimbursement tool for all your expenses.</p>
+                    <a href="#" class="btn btn-default" id="login1">Login</a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div id="contentDiv">
+    </div>
+    <div class="login-div row  well well-sm" id="loginDiv">
+        <h1 class="login row">Login</h1>
+        <div class="col-md-4">
+        </div>
+        <div id="empDiv" class="content-centre col-md-2">
+            <input id="EmpLogin" type="button" class="btn btn nohover " value="Employee" />
 
         </div>
-    </div>
-    <div id="adminDiv" class="content-centre">
-        <input id="AdminLogin" type="button" class="btn-link" value="Administration" />
-        <div id="admLoginDiv" class="container">
+        <div id="adminDiv" class="content-centre col-md-6">
+            <input id="AdminLogin" type="button" class="btn btn nohover " value="Administration" />
 
         </div>
+
+        <div id="empLoginDiv" class="container content-centre col-md-2">
+
+        </div>
+        <div id="admLoginDiv" class="container content-centre col-md-6">
+
+        </div>
+
     </div>
-</div>
+
+
 

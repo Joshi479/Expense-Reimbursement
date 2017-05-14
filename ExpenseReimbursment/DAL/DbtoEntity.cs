@@ -46,7 +46,7 @@ namespace ExpenseReimbursment.DAL
             foreach (var rep in repList)
             {
                 var report = new ExpenseReportEntity();
-                report.AppliedDate = rep.AppliedDate.ToString("MM/dd/YYYY");
+                report.AppliedDate = rep.AppliedDate.ToString("MM/dd/yyyy");
                 report.ApprovedAmt = rep.ApprovedAmt;
                 report.ApprovedDate = Convert.ToString(rep.ApprovalDate);
                 if (rep.ApproverId != null)
@@ -67,27 +67,29 @@ namespace ExpenseReimbursment.DAL
             return reportList;
         }
 
-        public List<ExpenseReportEntity> GetExpenseReportsbyApproverRole(string approverRole)
+        public List<ExpenseReportEntity> GetExpenseReportsbyApproverRole(string approverRole, int?empId)
         {
-            var rptList = _da.GetExpenseReportsbyApproverRole(approverRole);
+            var rptList = _da.GetExpenseReportsbyApproverRole(approverRole, empId);
             List<ExpenseReportEntity> reportList = new List<ExpenseReportEntity>();
             foreach (var rep in rptList)
             {
                 var report = new ExpenseReportEntity();
                 report.AppliedDate = rep.AppliedDate.ToString("MM/dd/yyyy");
                 report.ApprovedAmt = rep.ApprovedAmt;
-                if (rep.ApproverId != Convert.ToInt32(DBNull.Value))
+                if (rep.ApproverId != null)
                 {
                     report.Approver = GetEmployeeByEmpID(rep.ApproverId);
                     report.ApprovedDate = ((DateTime)rep.ApprovalDate).ToString("MM/dd/yyyy");
                 }
                 report.ApproverId = rep.ApproverId;
+                report.EmpId = rep.EmpId;
                 report.Employee = GetEmployeeByEmpID(rep.EmpId);
                 report.ExpenseAmt = rep.ExpenseAmt;
                 report.ExpTyCode = rep.ExpId;
                 report.ExpType = GetExpenseTypeByCode(rep.ExpId);
                 report.ReportId = rep.ReportId;
                 report.Status = rep.Status;
+                report.Comments = rep.Comments;
                 reportList.Add(report);
             }
             return reportList;
@@ -216,7 +218,7 @@ namespace ExpenseReimbursment.DAL
 
         public string ForgotPassword(int? userId)
         {
-            return _da.ForgotPassword(userId);
+            return GetUserCredentialsbyUserId(userId).Password;
         }
     }
 }

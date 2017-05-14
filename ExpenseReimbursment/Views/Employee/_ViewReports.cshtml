@@ -71,7 +71,7 @@
                     @if (expReport.Status.ToLower().Equals("approved"))
                     {
                         <td>
-                            expReport.ApprovedAmt.ToString();
+                            @expReport.ApprovedAmt.ToString()
                         </td>
                     }
                     else
@@ -81,7 +81,7 @@
                     @if (expReport.Status.ToLower().Equals("approved"))
                     {
                         <td>
-                            expReport.ApprovedDate;
+                            @expReport.ApproverId.ToString()
                         </td>
                     }
                     else
@@ -90,8 +90,8 @@
                     }
                     @if (expReport.Status.ToLower().Equals("approved"))
                     {
-                        <td>
-                            expReport.ApproverId.ToString();
+                        <td>                            
+                            @expReport.ApprovedDate
                         </td>
                     }
                     else

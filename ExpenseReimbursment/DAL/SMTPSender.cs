@@ -9,7 +9,7 @@ namespace ExpenseReimbursment.DAL
 {
     public static class SMTPSender
     {
-        public static string FromAddress = "gvbadmin@gmail.com";
+        public static string FromAddress = "gvb4676@gmail.com";
         public static string ToAddress { get; set; }
         public static string MessageBody { get; set; }
         public static string Subject { get; set; }
@@ -19,7 +19,7 @@ namespace ExpenseReimbursment.DAL
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
             smtpClient.EnableSsl = true;
             smtpClient.UseDefaultCredentials = true;
-            NetworkCredential creds = new NetworkCredential(FromAddress, "Admin_GVB");
+            NetworkCredential creds = new NetworkCredential(FromAddress, "Gvb@Admin");
             smtpClient.Credentials = creds;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.Port = 587;
@@ -27,7 +27,6 @@ namespace ExpenseReimbursment.DAL
 
             mail.From = new MailAddress(FromAddress, "GVB Expense Reimbursement", System.Text.Encoding.UTF8);
             mail.To.Add(new MailAddress(ToAddress));
-            mail.Bcc.Add(new MailAddress("gutta@ucmo.edu"));
             mail.Body = MessageBody + "\n\n\n ******This is system generated email. Please do not reply to this email address.*****";
             mail.Subject = Subject;
             mail.BodyEncoding = System.Text.Encoding.UTF8;

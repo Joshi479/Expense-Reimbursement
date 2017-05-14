@@ -46,9 +46,9 @@ namespace ExpenseReimbursment.Controllers
             string message;
             try
             {               
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid && model.UserId == null)
                 {
-                    message = "Employee Id and Password cannot be empty. Please login with Employee credentials.";
+                    message = "Please login with valid credentials.";
                     return Json(new { success = false, responseText = message });
                 }
                 _user.UserId = Convert.ToInt32(model.UserId);
@@ -111,23 +111,23 @@ namespace ExpenseReimbursment.Controllers
         [ActionName("ForgotPassword")]
         public ActionResult ForgotPassword_Post(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 string error = string.Empty;
                 ModelState.Values.SelectMany(v => v.Errors).ToList().ForEach(e => error += e.ErrorMessage + "\n");
                 return Json(new { success = false, message = error });
             }
             var employee = _de.GetEmployeeByEmpID(model.EmpId);
-            if (employee != null && employee.EmpId.Equals(model.Email))
+            if (employee != null && employee.EmailId.Equals(model.Email))
             {
                 try
                 {
                     string password = _de.ForgotPassword(model.EmpId);
                     SMTPSender.ToAddress = model.Email;
-                    SMTPSender.Subject = "New Password for Employee.";
-                    SMTPSender.MessageBody = "Your new password is given below. Please login with this password and reset to your own password.\n\n\n Passwor: " + password;
+                    SMTPSender.Subject = "Password Recovery for Employee.";
+                    SMTPSender.MessageBody = "Your password is given below. Please login to the application using this password.\n\n\n Password: " + password;
                     SMTPSender.SendEmail();
-                    return Json(new { success = true, msg = "New password is generated and emai is sent to the employee." });
+                    return Json(new { success = true, msg = "Password is sent to the employee through an email." });
                 }
                 catch (Exception ex) {
                     return Json(new { success = false, msg = ex.InnerException.Message });
@@ -182,6 +182,7 @@ namespace ExpenseReimbursment.Controllers
         public ActionResult LogOff()
         {
             Session.Clear();
+            Session.Abandon();
             Session.RemoveAll();
             FormsAuthentication.SignOut();
             

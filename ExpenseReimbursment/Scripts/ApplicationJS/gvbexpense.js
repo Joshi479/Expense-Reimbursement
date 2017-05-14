@@ -1,6 +1,17 @@
 ﻿/// <reference path="../DataTables/datatables.js" />
 
-
+//employee registration validation
+function validate() {
+    var fName = document.getElementById("fName").value;
+    var regex = /^[a-zA-Z]*$/;
+    if (regex.test(fName)) {
+        //document.getElementById("notification").innerHTML = "Watching.. Everything is Alphabet now";
+        return true;
+    } else {
+        document.getElementById("fName_Msg").innerHTML = "Alphabets Only";
+        return false;
+    }
+}
 //render Employee login
 $("#EmpLogin").click(function () {
     $.ajax({
@@ -8,13 +19,28 @@ $("#EmpLogin").click(function () {
         url: "/Account/Login",
         datatype: "html",
         success: function (data) {
-            $("#adminDiv").hide();
+           // $("#adminDiv").hide();
+            $("#admLoginDiv").hide();
+            $("#empLoginDiv").show();
             $("#empLoginDiv").html(data);
+            $("#EmpLogin").addClass('red');
+            $("#AdminLogin").removeClass('red');
         },
         error: function () {
             $("#empLoginDiv").html('<h1>Error Occured. Please check the connection.</h1>')
         }
     });
+});
+//onload
+$(document).ready(function () {
+    $("#loginDiv").hide();
+});
+//login1 button
+$("#login1").click(function () {
+    $("#loginDiv").show();
+    $("#myCarousel").hide();
+
+
 });
 
 //render admin login
@@ -24,8 +50,13 @@ $("#AdminLogin").click(function () {
         url: "/Account/Login",
         datatype: "html",
         success: function (data) {
-            $("#empDiv").hide();
+           // $("#empDiv").hide();
+            $("#empLoginDiv").hide();
+            $("#admLoginDiv").show();
             $("#admLoginDiv").html(data);
+            $("#EmpLogin").removeClass('red');
+            $("#AdminLogin").addClass('red');
+           
         },
         error: function () {
             $("#admLoginDiv").html('<h1>Error Occured. Please check the connection.</h1>');
@@ -43,12 +74,12 @@ $("#empList").click(function () {
             $("#adminBody").html(data);
             $("#empListTable").DataTable();
         },
-        error: function () {
+        error: function () {c
             $("#adminBody").html('<h1>Error Occured. Please check the connection.</h1>');
         }
     });
 });
-
+//on click of edit button
 $("#btnEdit").click(function () {
     $("#lblExpenseAmt").hide();
     $("#txtExpenseAmt").show();
@@ -57,8 +88,8 @@ $("#btnEdit").click(function () {
     $("#beforeEdit").hide();
     $("#afterEdit").show();
 });
-
-$("#btnApprove").click(function () {
+//on click of approve button
+$("#btnUpdatebefore").click(function () {
     $("#lblApprovedAmt").hide();
     $("#txtApprovedAmt").show();
     $("#lblComments").hide();
@@ -86,7 +117,6 @@ $("#resetPword").click(function (sender) {
 });
 
 //About
-
 function getAbout(div) {
     var myDiv = document.getElementById(div);
     $.ajax({
@@ -94,6 +124,7 @@ function getAbout(div) {
         url: "/Home/About",
         datatype: "html",
         success: function (data) {
+            $("#myCarousel").hide();
             myDiv.innerHTML = data;
         },
         error: function () {
@@ -101,7 +132,7 @@ function getAbout(div) {
         }
     });
 }
-
+//contact
 function getContact(div) {
     var myDiv = document.getElementById(div);
     $.ajax({
@@ -109,6 +140,7 @@ function getContact(div) {
         url: "/Home/Contact",
         datatype: "html",
         success: function (data) {
+            $("#myCarousel").hide();
             myDiv.innerHTML = data;
         },
         error: function () {
@@ -116,15 +148,14 @@ function getContact(div) {
         }
     });
 }
-// grt forgot password
-
+// get forgot password
 function ForgotPassword() {
     $.ajax({
         type: "GET",
         url: "/Account/ForgotPassword",
         datatype: "html",
         success: function (data) {
-            if ($("#empDiv").css("display") === "none") {
+            if ($("#empLoginDiv").css("display") === "none") {
                 $("#admLoginDiv").html(data);
             }
             else {
@@ -132,7 +163,7 @@ function ForgotPassword() {
             }            
         },
         error: function (data) {
-            if ($("#empDiv").css("display") === "none") {
+            if ($("#empLoginDiv").css("display") === "none") {
                 $("#admLoginDiv").html('<h1>Error Occured. Please check the connection.</h1>');
             }
             else {
@@ -141,7 +172,7 @@ function ForgotPassword() {
         }
     });
 }
-
+//on click of email password
 function ForgotPasswordPost()
 {
     var token = $("#formForgotPwrd input").val();
@@ -152,7 +183,7 @@ function ForgotPasswordPost()
     }
     $.ajax({
         type: "post",
-        url: "/Account/UserValidate",
+        url: "/Account/ForgotPassword",
         data: pwrdJson,
         datatype: "text",
         success: function (data) {
@@ -166,7 +197,7 @@ function ForgotPasswordPost()
             }
         },
         error: function (data) {
-            if ($("#empDiv").css("display") === "none") {
+            if ($("#empLoginDiv").css("display") === "none") {
                 $("#admLoginDiv").html('<h1>Error Occured. Please check the connection.</h1>');
             }
             else {
@@ -196,11 +227,12 @@ function getReportList(Id) {
 
 //get report list approver
 function getReportListApproval(empRole) {
-    var empJson = { approverRole: empRole }
+    var role = empRole;
+    var empJson = { approverRole: role }
     $.ajax({
         type: "GET",
         url: "/Employee/GetReportListApproval",
-        data: JSON.stringify(empJson),
+        data: empJson,
         datatype: "html",
         success: function (data) {
             $("#employeeBody").html(data);
@@ -214,6 +246,7 @@ function getReportListApproval(empRole) {
 
 //get report details
 function getReportDetails(Id) {
+    sessionStorage.setItem('rptData', $('#employeeBody').html());
     var rptId = { reportId: Id }
     $.ajax({
         type: "GET",
@@ -233,7 +266,7 @@ function getReportDetails(Id) {
         }
     });
 }
-
+//edit report
 function EditReport(isOwn) {
     var ownRpt = isOwn;
     $("#beforeEdit").hide();
@@ -249,9 +282,11 @@ function EditReport(isOwn) {
         $("#txtApprovedAmt").show();
     }
 }
-
-function UpdateReport()
+//update report
+function UpdateReport(empRole)
 {
+    var role = empRole;
+    var own;
     var model;
     var status = "Approved";
     var rptId = $("#lblRptId").text();
@@ -261,21 +296,24 @@ function UpdateReport()
         approvedAmt = 0;
         status = "Pending";
     }
-    if ($("#btnApprove").visible == true) {
+    if ($("#btnApprove").val() == "Approve") {
+        own = false;
         model = {
             ApprovedAmt: approvedAmt,
             Comments: $("#txtComments").val(),
             ReportId: rptId,
-            Status:status,
-            isOwnRpt: false
+            Status: status,
+            EmpId: $("#empId").text(),
+            isOwnRpt: own
         }
     }
     else {
+        own = true;
         model = {
             ExpenseAmt: $("#txtExpenseAmt").val(),
             Comments: $("#txtComments").val(),
             ReportId: rptId,
-            isOwnRpt: true
+            isOwnRpt: own
         }
     }
 
@@ -287,7 +325,12 @@ function UpdateReport()
         success: function (data) {
             alert(data.msg)
             if (data.success) {
-                getReportDetails(rptId);
+                if (own) {
+                    getReportList($("#empId").text());
+                }
+                else {
+                    getReportListApproval(role);
+                }                   
             }
         },
         error: function (data) {
@@ -298,6 +341,14 @@ function UpdateReport()
 
 //get empl details
 function EmployeeDetails(Id, isOwn) {
+    if ($('#employeeBody').html() != undefined) {
+        sessionStorage.setItem('empData', $('#employeeBody').html());
+    }
+    else {
+        $('.text-danger').text('');
+        sessionStorage.setItem('empData', $('#adminBody').html());
+    }
+    
     var empJson = { empId: Id };
     var isOwnEmp = isOwn;
     $.ajax({
@@ -325,8 +376,7 @@ function EmployeeDetails(Id, isOwn) {
         }
     });
 }
-
-
+//on click of edit employee
 function EditEmployeeDetails() {
     $("#divBacktoList").hide();
     $("#divEdit").hide();
@@ -337,7 +387,7 @@ function EditEmployeeDetails() {
     $("#txtEmail").show();
     $("#txtPhn").show();
 }
-
+//on update employee
 function updateEmployeeDetails() {
     var model = {
         EmailId: $("#txtEmail").val(),
@@ -368,7 +418,7 @@ function updateEmployeeDetails() {
 function login() {
     var token = $("#formLogin input").val();
     var role;
-    if ($("#empDiv").css("display") == "none") {
+    if ($("#empLoginDiv").css("display") == "none") {
         role = "ADM";
     }
     else
@@ -426,7 +476,7 @@ function ResetPasswordPost() {
         }
     });
 }
-
+//employee deactivation
 function EmpDeactivate(Id) {
     var empId = { empId: Id}
     $.ajax({
@@ -449,10 +499,18 @@ function EmpDeactivate(Id) {
         }
     });
 }
-
+//navigate to employee list
 function backToEmpList()
 {
-    $("#empList").trigger('click');
+    $('#adminBody').html(sessionStorage.getItem('empData'));
+    if (sessionStorage.getItem('empData') != null) {
+        $('#employeeBody').html(sessionStorage.getItem('empData'));
+        sessionStorage.removeItem('empData');
+    }
+    else {
+        $('#employeeBody').html(sessionStorage.getItem('rptData'));
+        sessionStorage.removeItem('rptData');
+    }
 }
 
 

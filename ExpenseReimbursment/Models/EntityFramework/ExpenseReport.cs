@@ -17,9 +17,9 @@ namespace ExpenseReimbursment.Models.EntityFramework
         public int ReportId { get; set; }
         public string ExpId { get; set; }
         public Nullable<int> EmpId { get; set; }
-        public Nullable<int> ExpenseAmt { get; set; }
+        public Nullable<decimal> ExpenseAmt { get; set; }
         public Nullable<int> ApproverId { get; set; }
-        public Nullable<int> ApprovedAmt { get; set; }
+        public Nullable<decimal> ApprovedAmt { get; set; }
         public string Comments { get; set; }
         public System.DateTime AppliedDate { get; set; }
         public Nullable<System.DateTime> ApprovalDate { get; set; }
